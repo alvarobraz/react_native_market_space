@@ -25,6 +25,7 @@ export const THEME = extendTheme({
     bold: 'Karla_700Bold',
   },
   fontSizes: {
+    xss: 10,
     xs: 11.6,
     xm: 12,
     sm: 14,

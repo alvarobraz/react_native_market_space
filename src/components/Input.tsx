@@ -1,13 +1,16 @@
 import { Input as NativeBaseInput, IInputProps } from 'native-base';
+// import { Sliders } from "phosphor-react-native";
+
+type Props = IInputProps & {
+  typeInput?: 'default' | 'filter'
+}
 
 
-
-
-export function Input({ ...rest }: IInputProps) {
+export function Input({ typeInput,...rest }: Props) {
   return (
     <NativeBaseInput 
       bg="gray.700"
-      h={14}
+      h={12}
       px={4}
       // borderWidth={0}
       fontSize="md"
@@ -15,13 +18,18 @@ export function Input({ ...rest }: IInputProps) {
       fontFamily="regular"
       mb={4}
       placeholderTextColor="gray.400"
-      borderRadius={6}
+      borderTopLeftRadius={6}
+      borderTopRightRadius={typeInput === 'filter' ? 0 : 6}
+      borderBottomRightRadius={typeInput === 'filter' ? 0 : 6}
+      borderBottomLeftRadius={6}
       _focus={{
         bgColor: 'gray.700',
         borderWidth: 1,
         borderColor: 'gray.300'
       }}
+      borderRightWidth={typeInput === 'filter' ? 0 : 1}
       {...rest}
-    />
+    >
+    </NativeBaseInput>
   );
 }

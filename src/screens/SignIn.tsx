@@ -1,4 +1,4 @@
-import { VStack, Text, Center, Heading, Icon, View, ScrollView } from "native-base";
+import { VStack, Text, Center, Heading, Icon, ScrollView } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
 
 import LogoSvg from '@assets/logo_market_space.svg';
