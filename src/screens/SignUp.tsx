@@ -1,5 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
 import { VStack, Text, Center, Heading, Icon, ScrollView } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
+
+import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 
 import LogoMinSvg from '@assets/log_market_space_min.svg';
 
@@ -8,6 +11,13 @@ import { Button } from "@components/Button";
 import { UserPhoto } from "@components/UserPhoto";
 
 export function SignUp() {
+
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
+
+  function handleGoBack() {
+    navigation.goBack();
+  }
+
   return (
     <VStack flex={1} bg="gray.600" alignItems="center">
       <ScrollView w="full" px={10} showsVerticalScrollIndicator={false}>
@@ -70,6 +80,7 @@ export function SignUp() {
           <Button 
           title="Ir para login"
           variant="gray"
+          onPress={handleGoBack}
           />
         </Center>
       </ScrollView>

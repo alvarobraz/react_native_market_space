@@ -1,5 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
 import { VStack, Text, Center, Heading, Icon, ScrollView } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
+
+import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 
 import LogoSvg from '@assets/logo_market_space.svg';
 import MarketspaceSvg from '@assets/marketspace.svg'
@@ -8,6 +11,13 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 export function SignIn() {
+
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
+
+  function handleNewAccount() {
+    navigation.navigate('signUp');
+  }
+
   return (
     <VStack flex={1} bg="gray.600">
       <ScrollView w="full" px={10} showsVerticalScrollIndicator={false}>
@@ -50,6 +60,7 @@ export function SignIn() {
           <Button 
           title="Criar uma conta"
           variant="gray"
+          onPress={handleNewAccount}
           />
         </Center>
       </ScrollView>

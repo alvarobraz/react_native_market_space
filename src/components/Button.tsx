@@ -38,7 +38,6 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
             name={nameIcon}
             color="white"
             size={5}
-            left={-3}
             top={0.4}
           />
           :

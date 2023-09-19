@@ -9,7 +9,7 @@ import { Switch } from 'react-native';
 import { CheckBox } from "@components/CheckBox";
 import { Button } from "@components/Button";
 
-export default function Catalog() {
+export function Catalog() {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
