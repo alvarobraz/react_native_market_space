@@ -9,7 +9,7 @@ type Props = IButtonProps & {
 }
 
 export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
-  console.log(nameIcon)
+  // console.log(nameIcon)
   return (
     <ButtonNativeBase
       flexDirection="row"
@@ -24,7 +24,12 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
       }}
       {...rest}
     >
-      <HStack>
+      <HStack
+        flexDirection="row"
+        alignItems="center"
+        textAlign="center"
+        justifyContent="center"
+      >
         {
           icon === true ?
           
@@ -48,9 +53,9 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           w={icon === true ? "150" : "full"}
           color={variant === 'blue' ? 'white' : variant === 'black' ? 'white' : 'gray.100'}
           fontFamily="bold"
-          fontSize={icon === true ? "xm" : "sm"}
+          fontSize={icon === true ? "xm" : "xm"}
           ml={icon === true ? "1" : "0"}
-          left={-3}
+          // left={-3}
         >
           {title}
         </Text>
