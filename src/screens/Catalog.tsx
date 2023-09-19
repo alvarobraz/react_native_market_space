@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AppNavigatorRoutesProps } from '@routes/app.routes'
 import { ButtonTag } from "@components/ButtonTag";
 import HeaderCatalog from "@components/HeaderCatalog";
 import { InputButtonFilter } from "@components/InputButtonFilter";
@@ -8,8 +9,11 @@ import { VStack, Text, HStack, ScrollView, Modal, Box, } from "native-base";
 import { Switch } from 'react-native';
 import { CheckBox } from "@components/CheckBox";
 import { Button } from "@components/Button";
+import { useNavigation } from "@react-navigation/native";
 
 export function Catalog() {
+
+  const navigation = useNavigation<AppNavigatorRoutesProps>()
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -44,6 +48,13 @@ export function Catalog() {
       setType([...type, title]);
     }
   }
+
+  function handleDetailAd(id: string) {
+    navigation.navigate('detailAd', {
+      id
+    });
+  }
+
   
   return (
     <>
@@ -154,7 +165,10 @@ export function Catalog() {
         handleApplyFilters={showModal}
         />
         <HStack top={8} flexWrap="wrap" justifyContent="space-between" pb={10} maxW="300px">
-            <ProductAds variant="new" />
+            <ProductAds 
+              variant="new"
+              onPress={ () => handleDetailAd('1') }
+            />
             <ProductAds />
             <ProductAds />
             <ProductAds variant="new" />

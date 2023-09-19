@@ -1,18 +1,22 @@
-import { View, useTheme } from 'native-base';
+import { useTheme } from 'native-base';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import { Catalog } from '@screens/Catalog';
-import { MyAds } from '@screens/MyAdds';
-import { SignIn } from '@screens/SignIn';
+import { MyAds } from '@screens/MyAds';
+import { DetailAd } from '@screens/DetailAd';
 import House from '../assets/house.svg'
 import Tag from '../assets/tag.svg'
 import Logout from '../assets/logout.svg'
 import { SignOut } from '@screens/SignOut';
 import { TouchableOpacity } from 'react-native';
 
+
 type AppRoutes = {
   home: undefined;
   myads: undefined;
+  detailAd: {
+    id: string
+  }
   signout: undefined
 }
 
@@ -63,7 +67,11 @@ export function AppRoutes() {
           )
         }}
       />
-
+      <Screen 
+        name='detailAd'
+        component={DetailAd}
+        options={{ tabBarButton: () => null }}
+      />
       <Screen
         name="signout"
         component={SignOut}
