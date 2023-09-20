@@ -35,9 +35,9 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
       <HeaderAds
         iconLeft={true}
         nameIconLeft='arrow-back'
-        title='Meus anúncios'
-        iconRight={true}
-        nameIconRight='arrow-forward'
+        // title='Meus anúncios'
+        iconRight={false}
+        // nameIconRight='arrow-forward'
         handleGoBack={handleGoBack}
       />
       <ScrollView w="full"showsVerticalScrollIndicator={false} mb={24}>

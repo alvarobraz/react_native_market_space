@@ -168,12 +168,13 @@ export function Catalog() {
           <ProductAds 
             variant="new"
             onPress={ () => handleDetailAd('1') }
+            hasAvatar={true}
           />
-          <ProductAds />
-          <ProductAds />
-          <ProductAds variant="new" />
-          <ProductAds />
-          <ProductAds />
+          <ProductAds hasAvatar={true} />
+          <ProductAds hasAvatar={true} />
+          <ProductAds variant="new" hasAvatar={true} />
+          <ProductAds hasAvatar={true} />
+          <ProductAds hasAvatar={true} />
         </Box>
       </VStack>
     </ScrollView>

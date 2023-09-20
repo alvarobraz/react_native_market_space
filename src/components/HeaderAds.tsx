@@ -6,7 +6,7 @@ type PropsHeader = IButtonProps & {
   nameIconLeft?: 'arrow-back';
   title?: string;
   iconRight?: boolean;
-  nameIconRight?: 'arrow-forward';
+  nameIconRight?: 'add' | 'arrow-forward';
   handleGoBack?: () => void;
 }
 
@@ -21,7 +21,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
       mt={6} 
       mb={2} 
       px={5} 
-      pt={10}
+      pt={5}
       pb={7}
     >
        {
