@@ -42,7 +42,7 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
       />
       <ScrollView w="full"showsVerticalScrollIndicator={false} mb={24}>
         <CaroulselAds />
-        <VStack px={10}>
+        <VStack px={5}>
           <Box h={7} w="full" my={4} flexDirection="row" justifyContent="flex-start" textAlign="center" alignContent="center" >
             <Image
               h={7}
@@ -146,20 +146,20 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
             </Box>
           </VStack>
         </VStack>
-        <HStack mt={4} px={10} py={4} bg="white" justifyContent="space-between" w="100%">
-            <Box flexDirection="row">
-             <Text fontFamily="bold" fontSize="sm" color="blue.200" top="6px" mr="3px">
+        <HStack mt={4} px={5} py={4} bg="white" justifyContent="space-between" w="100%">
+            <Box w="35%" flexDirection="row" top={1}>
+               <Text fontFamily="bold" fontSize="sm" color="blue.200" top="6px" mr="3px">
                 R$
               </Text>
               <Text fontFamily="bold" fontSize="lg" color="blue.200">
                 120,00
               </Text>
             </Box>
-            <Box ml={3}>
+            <Box w="65%" ml={3}>
               <Button
                 icon={true}
                 nameIcon='whatshot'
-                title='Contatar'
+                title='Entrar em contato'
                 variant="blue"
               />
             </Box>

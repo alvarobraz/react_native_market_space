@@ -146,7 +146,7 @@ export function Catalog() {
         </Modal.Content>
       </Modal>
       <ScrollView w="full"showsVerticalScrollIndicator={false}>
-      <VStack flex={1} px={10} my={12} bg="gray.600" alignItems="center">
+      <VStack flex={1} px={5} mt={6} mb={12} bg="gray.600" alignItems="center">
         <HeaderCatalog
           nameUser="Álvaro"
         />
@@ -164,17 +164,17 @@ export function Catalog() {
         handleSearchAds={handleSearchAds}
         handleApplyFilters={showModal}
         />
-        <HStack top={8} flexWrap="wrap" justifyContent="space-between" pb={10} left="3px" maxW="327px">
-            <ProductAds 
-              variant="new"
-              onPress={ () => handleDetailAd('1') }
-            />
-            <ProductAds />
-            <ProductAds />
-            <ProductAds variant="new" />
-            <ProductAds />
-            <ProductAds />
-          </HStack>
+        <Box top={8} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} left="3px" maxW="327px">
+          <ProductAds 
+            variant="new"
+            onPress={ () => handleDetailAd('1') }
+          />
+          <ProductAds />
+          <ProductAds />
+          <ProductAds variant="new" />
+          <ProductAds />
+          <ProductAds />
+        </Box>
       </VStack>
     </ScrollView>
     </>

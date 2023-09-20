@@ -21,11 +21,11 @@ export function ProductAds({ imgAvatar, variant, ...rest }: Props) {
         bg: 'gray.500'
       }}
       {...rest}
-      maxW="113px"
+      maxW="127px"
     >
-      <VStack h={143} maxW="113px">
+      <VStack h={143} maxW="127px">
         <Image 
-            maxW="113px" 
+            maxW="127px" 
             h="90px"
             source={BackgroundImgProduct}
             defaultSource={BackgroundImgProduct}
@@ -36,7 +36,7 @@ export function ProductAds({ imgAvatar, variant, ...rest }: Props) {
             mb={2}
           />
           
-          <HStack justifyContent="space-between" w="113px">
+          <HStack justifyContent="space-between" w="127px">
             <Image
               h={4}
               w={4} 

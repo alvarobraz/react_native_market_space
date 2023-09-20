@@ -20,7 +20,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
       h={12} 
       mt={6} 
       mb={2} 
-      px={10} 
+      px={5} 
       pt={10}
       pb={7}
     >

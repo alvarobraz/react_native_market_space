@@ -20,7 +20,7 @@ export function SignUp() {
 
   return (
     <VStack flex={1} bg="gray.600" alignItems="center">
-      <ScrollView w="full" px={10} showsVerticalScrollIndicator={false}>
+      <ScrollView w="full" px={5} showsVerticalScrollIndicator={false}>
         <Center mt={12} mb={5}>
           <LogoMinSvg />
         </Center>

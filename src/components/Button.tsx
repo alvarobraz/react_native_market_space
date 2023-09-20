@@ -15,7 +15,7 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
       flexDirection="row"
       alignItems="center"
       textAlign="center"
-      justifyContent={icon === true ? "space-around" : "flex-start"}
+      justifyContent={icon === true ? "flex-start" : "flex-start"}
       h={12}
       bg={variant === 'blue' ? 'blue.200' : variant === 'black' ? 'gray.100' : 'gray.500'}
       rounded="md"
@@ -48,14 +48,14 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           // bg="gray.500"
           flexDirection="row"
           alignItems="center"
-          textAlign={icon === true ? "center" : "center"}
-          justifyContent={icon === true ? "space-around" : "center"}
-          w={icon === true ? "100" : "full"}
+          textAlign={icon === true ? "left" : "center"}
+          justifyContent={icon === true ? "center" : "center"}
+          w={icon === true ? "full" : "full"}
           color={variant === 'blue' ? 'white' : variant === 'black' ? 'white' : 'gray.100'}
           fontFamily="bold"
           fontSize={icon === true ? "xs" : "xm"}
           // right={-6}
-          // ml={icon === true ? "4" : "0"}
+          ml={icon === true ? "2" : "0"}
           // left={-3}
         >
           {title}
