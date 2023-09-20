@@ -13,18 +13,19 @@ export function ProductAds({ imgAvatar, variant, ...rest }: Props) {
     <ButtonNativeBase 
       bg="gray.600" 
       mt={0}
-      mb={6}
-      mx={0} 
+      mb={8}
+      mr={0} 
       px={0} 
       py={0} 
       _pressed={{
         bg: 'gray.500'
       }}
       {...rest}
+      maxW="113px"
     >
-      <VStack h={143}>
+      <VStack h={143} maxW="113px">
         <Image 
-            w="133px" 
+            maxW="113px" 
             h="90px"
             source={BackgroundImgProduct}
             defaultSource={BackgroundImgProduct}
@@ -35,7 +36,7 @@ export function ProductAds({ imgAvatar, variant, ...rest }: Props) {
             mb={2}
           />
           
-          <HStack justifyContent="space-between" w="133px">
+          <HStack justifyContent="space-between" w="113px">
             <Image
               h={4}
               w={4} 

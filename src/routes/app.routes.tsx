@@ -70,7 +70,15 @@ export function AppRoutes() {
       <Screen 
         name='detailAd'
         component={DetailAd}
-        options={{ tabBarButton: () => null }}
+        options={{
+          tabBarStyle: {
+            display: 'none',
+          },
+          tabBarItemStyle: {
+            display: 'none',
+          },
+        }}
+        // options={{ tabBarButton: () => null }}
       />
       <Screen
         name="signout"

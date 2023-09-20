@@ -5,7 +5,7 @@ type Props = IButtonProps & {
   title: string;
   variant?: 'black' | 'blue' | 'gray';
   icon?: boolean;
-  nameIcon?: 'add'
+  nameIcon?: 'add' | 'whatshot'
 }
 
 export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
@@ -15,7 +15,7 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
       flexDirection="row"
       alignItems="center"
       textAlign="center"
-      justifyContent="flex-start"
+      justifyContent={icon === true ? "space-around" : "flex-start"}
       h={12}
       bg={variant === 'blue' ? 'blue.200' : variant === 'black' ? 'gray.100' : 'gray.500'}
       rounded="md"
@@ -28,7 +28,7 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
         flexDirection="row"
         alignItems="center"
         textAlign="center"
-        justifyContent="center"
+        justifyContent={icon === true ? "flex-start" : "center"}
       >
         {
           icon === true ?
@@ -37,8 +37,9 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
             as={MaterialIcons}
             name={nameIcon}
             color="white"
-            size={5}
+            size={4}
             top={0.4}
+            // left={3}
           />
           :
           ''
@@ -47,13 +48,14 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           // bg="gray.500"
           flexDirection="row"
           alignItems="center"
-          textAlign={icon === true ? "left" : "center"}
-          justifyContent={icon === true ? "flex-start" : "center"}
-          w={icon === true ? "150" : "full"}
+          textAlign={icon === true ? "center" : "center"}
+          justifyContent={icon === true ? "space-around" : "center"}
+          w={icon === true ? "100" : "full"}
           color={variant === 'blue' ? 'white' : variant === 'black' ? 'white' : 'gray.100'}
           fontFamily="bold"
-          fontSize={icon === true ? "xm" : "xm"}
-          ml={icon === true ? "1" : "0"}
+          fontSize={icon === true ? "xs" : "xm"}
+          // right={-6}
+          // ml={icon === true ? "4" : "0"}
           // left={-3}
         >
           {title}

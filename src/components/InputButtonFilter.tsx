@@ -10,9 +10,9 @@ type Props = IButtonProps & {
 
 export function InputButtonFilter({ typeInput, handleSearchAds, handleApplyFilters, ...rest }:Props) {
   return (
-    <HStack flex={1} top={4} w="full">
+    <HStack flex={1} top={4} w="100%">
       <Input 
-        w="85%" 
+        w="80%" 
         placeholder="Buscar" 
         typeInput={typeInput}
         InputRightElement={
@@ -40,7 +40,7 @@ export function InputButtonFilter({ typeInput, handleSearchAds, handleApplyFilte
       />
       <Box w={0.4} h="18px" mt="15px" bg="gray.400" />
       <ButtonNativeBase 
-        w={10} 
+        w="20%" 
         h={12} 
         bg="gray.700" 
         mr={0} 

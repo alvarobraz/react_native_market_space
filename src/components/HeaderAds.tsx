@@ -7,9 +7,10 @@ type PropsHeader = IButtonProps & {
   title?: string;
   iconRight?: boolean;
   nameIconRight?: 'arrow-forward';
+  handleGoBack?: () => void;
 }
 
-export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, ...rest }: PropsHeader) {
+export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, ...rest }: PropsHeader) {
   console.log(iconLeft)
   return(
     <HStack
@@ -19,19 +20,21 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
       h={12} 
       mt={6} 
       mb={2} 
-      px={5} 
-      py={4}
+      px={10} 
+      pt={10}
+      pb={7}
     >
        {
           iconLeft === true ?
           <ButtonNativeBase
             {...rest}
-            w={5}
+            w="5%"
             bg="gray.600"
             _pressed={{
               bg: 'gray.500'
             }}
-            left={title ? "0" : "-4px"}
+            left={0}
+            onPress={handleGoBack}
           >
             <Icon 
               as={MaterialIcons}
@@ -51,28 +54,16 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
             alignItems="center"
             textAlign={iconLeft === true ? "center" : "center"}
             justifyContent={iconLeft === true ? "center" : "center"}
-            w={iconLeft === true ? "70%" : "70%"}
+            w="90%"
             h={5}
             color="gray.100"
             fontFamily="bold"
             fontSize={iconLeft === true ? "sm" : "sm"}
-            ml={
-              iconLeft === false && iconRight === true ? 
-              "45px" 
-              : 
-              iconLeft === true && iconRight === false ? 
-              "45px" 
-              : 
-              "21px"
-            }
-            mr={
-              iconLeft === false && iconRight === true ? 
-              "23px" 
-              : 
-              "22px"
-            }
+            mx={0}
+            ml={iconLeft === false ? '5%' : 0}
+            mr={iconRight === false ? '5%' : 0}
             top={-2}
-            left={iconRight === false ? '-24px' : '0'}
+            // left={iconRight === false ? '-24px' : '0'}
           >
             {title}
           </Text>
@@ -83,12 +74,12 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
           iconRight === true ?
           <ButtonNativeBase
             {...rest}
-            w={5}
+            w="5%"
             bg="gray.600"
             _pressed={{
               bg: 'gray.500'
             }}
-            right={title ? "0" : "-4px"}
+            right={0}
           >
             <Icon 
               as={MaterialIcons}
