@@ -9,9 +9,11 @@ import LogoMinSvg from '@assets/log_market_space_min.svg';
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 import { UserPhoto } from "@components/UserPhoto";
+import { dimensionWith } from "@utils/dimensionWith";
 
 export function SignUp() {
 
+  const dimension = dimensionWith()
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   function handleGoBack() {
@@ -20,7 +22,7 @@ export function SignUp() {
 
   return (
     <VStack flex={1} bg="gray.600" alignItems="center">
-      <ScrollView w="full" px={5} showsVerticalScrollIndicator={false}>
+      <ScrollView w="full" px={dimension > 400 ? 10 : 5} showsVerticalScrollIndicator={false}>
         <Center mt={12} mb={5}>
           <LogoMinSvg />
         </Center>

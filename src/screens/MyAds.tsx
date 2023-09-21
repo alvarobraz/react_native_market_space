@@ -2,10 +2,21 @@ import { useState } from 'react';
 import HeaderAds from '@components/HeaderAds';
 import { ScrollView, Box, CheckIcon, Select, Text, VStack } from 'native-base';
 import { ProductAds } from '@components/ProductAds';
+import { dimensionWith } from '@utils/dimensionWith';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigatorRoutesProps } from '@routes/app.routes';
 
 export function MyAds() {
 
+  const dimension = dimensionWith()
   const [service, setService] = useState("");
+
+  const navigation = useNavigation<AppNavigatorRoutesProps>()
+  function handleDetailAd(id: string) {
+    navigation.navigate('detailAd', {
+      id
+    });
+  }
 
   return (
     <ScrollView w="full"showsVerticalScrollIndicator={false}>
@@ -17,7 +28,7 @@ export function MyAds() {
         nameIconRight='add'
         // handleGoBack={handleGoBack}
       />
-      <Box px={5} flexDir="row" justifyContent="space-between" alignContent="center" alignItems="center">
+      <Box px={dimension > 400 ? 10 : 5} flexDir="row" justifyContent="space-between" alignContent="center" alignItems="center">
         <Text fontFamily="regular" fontSize="sm" color="gray.200">
           9 anúncíos
         </Text>
@@ -30,10 +41,10 @@ export function MyAds() {
             <Select.Item label="usado" value="used" />
           </Select>
       </Box>
-      <Box px={5} top={6} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} maxW="327px">
+      <Box px={dimension > 400 ? 10 : 5} top={6} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} maxW="full">
           <ProductAds 
             variant="new"
-            // onPress={ () => handleDetailAd('1') }
+            onPress={ () => handleDetailAd('1') }
           />
           <ProductAds />
           <ProductAds />

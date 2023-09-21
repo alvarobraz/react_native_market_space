@@ -29,7 +29,7 @@ export function AppRoutes() {
   const { colors, sizes } = useTheme();
 
   const iconSize = sizes[5];
-
+  
 
   return (
     <Navigator screenOptions={{ 

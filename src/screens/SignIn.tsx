@@ -9,9 +9,11 @@ import MarketspaceSvg from '@assets/marketspace.svg'
 
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import { dimensionWith } from "@utils/dimensionWith";
 
 export function SignIn() {
 
+  const dimension = dimensionWith()
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   function handleNewAccount() {
@@ -20,7 +22,7 @@ export function SignIn() {
 
   return (
     <VStack flex={1} bg="gray.600">
-      <ScrollView w="full" px={5} showsVerticalScrollIndicator={false}>
+      <ScrollView w="full" px={dimension > 400 ? 10 : 5} showsVerticalScrollIndicator={false}>
         <Center my={12}>
           <LogoSvg />
         </Center>

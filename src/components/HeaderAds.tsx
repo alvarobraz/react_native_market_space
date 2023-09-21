@@ -1,17 +1,19 @@
 import { Button as ButtonNativeBase, IButtonProps, HStack, Icon, Text } from "native-base";
 import { MaterialIcons } from '@expo/vector-icons';
+import { dimensionWith } from "@utils/dimensionWith";
 
 type PropsHeader = IButtonProps & {
   iconLeft?: boolean;
   nameIconLeft?: 'arrow-back';
   title?: string;
   iconRight?: boolean;
-  nameIconRight?: 'add' | 'arrow-forward';
+  nameIconRight?: 'add' | 'arrow-forward' | 'border-color';
   handleGoBack?: () => void;
+  myAd?: boolean;
 }
 
-export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, ...rest }: PropsHeader) {
-  console.log(iconLeft)
+export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, myAd = true, ...rest }: PropsHeader) {
+  const dimension = dimensionWith()
   return(
     <HStack
       justifyContent={title ? "center" : "space-between"} 
@@ -20,7 +22,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
       h={12} 
       mt={6} 
       mb={2} 
-      px={5} 
+      px={dimension > 400 ? 10 : 5} 
       pt={5}
       pb={7}
     >
@@ -85,7 +87,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
               as={MaterialIcons}
               name={nameIconRight}
               color="gray.100"
-              size={5}
+              size={4}
               left={-9}
             />
           </ButtonNativeBase>

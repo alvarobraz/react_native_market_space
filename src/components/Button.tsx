@@ -1,21 +1,22 @@
 import { Button as ButtonNativeBase, IButtonProps, Icon, Text, HStack } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
+import { dimensionWith } from '@utils/dimensionWith';
 
 type Props = IButtonProps & {
   title: string;
   variant?: 'black' | 'blue' | 'gray';
   icon?: boolean;
-  nameIcon?: 'add' | 'whatshot'
+  nameIcon?: 'add' | 'whatshot' | 'power-settings-new' | 'delete-outline'
 }
 
 export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
-  // console.log(nameIcon)
+  const dimension = dimensionWith()
   return (
     <ButtonNativeBase
       flexDirection="row"
       alignItems="center"
       textAlign="center"
-      justifyContent={icon === true ? "flex-start" : "flex-start"}
+      justifyContent={icon === true ? "space-around" : "flex-start"}
       h={12}
       bg={variant === 'blue' ? 'blue.200' : variant === 'black' ? 'gray.100' : 'gray.500'}
       rounded="md"
@@ -36,7 +37,7 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           <Icon 
             as={MaterialIcons}
             name={nameIcon}
-            color="white"
+            color={nameIcon === 'delete-outline' ? "black" : "white"}
             size={4}
             top={0.4}
             // left={3}
@@ -48,12 +49,13 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           // bg="gray.500"
           flexDirection="row"
           alignItems="center"
-          textAlign={icon === true ? "left" : "center"}
+          textAlign={icon === true ? "center" : "center"}
           justifyContent={icon === true ? "center" : "center"}
-          w={icon === true ? "full" : "full"}
+          w={icon === true ? "auto" : "full"}
           color={variant === 'blue' ? 'white' : variant === 'black' ? 'white' : 'gray.100'}
           fontFamily="bold"
           fontSize={icon === true ? "xs" : "xm"}
+          // position="relative"
           // right={-6}
           ml={icon === true ? "2" : "0"}
           // left={-3}

@@ -7,6 +7,7 @@ import AvataDefault from '../assets/avatar_default.png'
 import { Barcode, QrCode, Money, CreditCard, Bank } from "phosphor-react-native";
 import { Button } from '@components/Button';
 import { AppNavigatorRoutesProps } from '@routes/app.routes';
+import { dimensionWith } from '@utils/dimensionWith';
 
 type RouteParams = {
   id: string;
@@ -16,10 +17,13 @@ type PropsAds = {
   imgAvatar?: string;
   nameUser?: string;
   variant?: 'new' | 'used';
+  myAd?: boolean;
+  isActive?: 'active' | 'inactive';
 }
 
-export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
+export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, isActive = 'inactive' }: PropsAds) {
 
+  const dimension = dimensionWith()
   const navigation = useNavigation<AppNavigatorRoutesProps>();
   const route = useRoute()
   const { id } = route.params as RouteParams
@@ -36,13 +40,16 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
         iconLeft={true}
         nameIconLeft='arrow-back'
         // title='Meus anúncios'
-        iconRight={false}
-        // nameIconRight='arrow-forward'
+        iconRight={true}
+        nameIconRight='border-color'
         handleGoBack={handleGoBack}
+        myAd={true}
       />
       <ScrollView w="full"showsVerticalScrollIndicator={false} mb={24}>
-        <CaroulselAds />
-        <VStack px={5}>
+        <CaroulselAds
+        isActive={isActive} 
+        />
+        <VStack px={dimension > 400 ? 10 : 5}>
           <Box h={7} w="full" my={4} flexDirection="row" justifyContent="flex-start" textAlign="center" alignContent="center" >
             <Image
               h={7}
@@ -146,7 +153,24 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
             </Box>
           </VStack>
         </VStack>
-        <HStack mt={4} px={5} py={4} bg="white" justifyContent="space-between" w="100%">
+        {
+          isActive ?
+          <VStack py={5} h="145px" px={dimension > 400 ? 10 : 5} justifyContent="space-between">
+            <Button
+              icon={true}
+              nameIcon='power-settings-new'
+              title={isActive === 'active' ? 'Desativar anúncio' : 'Reativar anúncio'}
+              variant={isActive === 'active' ? "black" : "blue"}
+            />
+            <Button
+              icon={true}
+              nameIcon='delete-outline'
+              title='Excluir anúncio'
+              variant="gray"
+            />
+          </VStack>
+          :
+          <HStack mt={4} px={dimension > 400 ? 10 : 5} py={4} bg="white" justifyContent="space-between" w="100%">
             <Box w="35%" flexDirection="row" top={1}>
                <Text fontFamily="bold" fontSize="sm" color="blue.200" top="6px" mr="3px">
                 R$
@@ -164,6 +188,7 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new' }: PropsAds) {
               />
             </Box>
           </HStack>
+        }
       </ScrollView>
     </VStack>
   );

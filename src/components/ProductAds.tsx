@@ -3,6 +3,7 @@ import { Button as ButtonNativeBase, IButtonProps, Box, HStack, Image, Text, VSt
 import BackgroundImgProduct from '../assets/img_product_a.png'
 import AvataDefault from '../assets/avatar_default.png'
 import Luminaria from '../assets/luminaria.png'
+import { dimensionWith } from "@utils/dimensionWith";
 
 type Props = IButtonProps & {
   imgAvatar?: string;
@@ -12,6 +13,9 @@ type Props = IButtonProps & {
 }
 
 export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, ...rest }: Props) {
+
+  const dimension = dimensionWith()
+
   return (
     <ButtonNativeBase 
       bg="gray.600" 
@@ -24,12 +28,13 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, ...rest
         bg: 'gray.500'
       }}
       {...rest}
-      maxW="127px"
+      w="47%"
+      h="auto"
       style={ adsInactive ? { opacity: 0.8 } : null}
     >
-      <VStack h={143} maxW="127px">
+      <VStack h="auto" w="100%">
         <Image 
-            maxW="127px" 
+            maxW={dimension > 400 ? "153px" : "127px"} 
             h="90px"
             source={Luminaria}
             defaultSource={Luminaria}
@@ -40,7 +45,7 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, ...rest
             mb={2}
           />
           
-          <HStack justifyContent={hasAvatar ? "space-between" : "flex-end"} w="127px">
+          <HStack justifyContent={hasAvatar ? "space-between" : "flex-end"} maxW={dimension > 400 ? "153px" : "127px"} >
             {
               hasAvatar ?
               <Image
@@ -66,15 +71,15 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, ...rest
           </HStack>
           {
             adsInactive ?
-            <VStack top={-43}>
-              <Text fontFamily="bold" fontSize="9px" color="white" textAlign="left" left={1} >
+            <VStack position="absolute" top="72px">
+              <Text fontFamily="bold" fontSize="9px" color="white" textAlign="left" left={2} >
                 ANÚNCIO DESATIVADO
               </Text>
             </VStack>
             :
             ''
           }
-          <VStack style={ adsInactive ? { opacity: 0.7 } : null} top={adsInactive ? -22 : -6}>
+          <VStack style={ adsInactive ? { opacity: 0.7 } : null} top={adsInactive ? -6 : -6}>
             <Text fontFamily="bold" fontSize="sm" color="gray.200" textAlign="left">
             Tênis vermelho
             </Text>

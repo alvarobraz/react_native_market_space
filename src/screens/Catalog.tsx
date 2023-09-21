@@ -10,9 +10,12 @@ import { Switch } from 'react-native';
 import { CheckBox } from "@components/CheckBox";
 import { Button } from "@components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { dimensionWith } from "@utils/dimensionWith";
+// import {Dimensions} from 'react-native';
 
 export function Catalog() {
 
+  const dimension = dimensionWith()
   const navigation = useNavigation<AppNavigatorRoutesProps>()
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -146,7 +149,7 @@ export function Catalog() {
         </Modal.Content>
       </Modal>
       <ScrollView w="full"showsVerticalScrollIndicator={false}>
-      <VStack flex={1} px={5} mt={6} mb={12} bg="gray.600" alignItems="center">
+      <VStack flex={1} px={dimension > 400 ? 10 : 5} mt={6} mb={12} bg="gray.600" alignItems="center">
         <HeaderCatalog
           nameUser="Álvaro"
         />
@@ -164,7 +167,7 @@ export function Catalog() {
         handleSearchAds={handleSearchAds}
         handleApplyFilters={showModal}
         />
-        <Box top={8} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} left="3px" maxW="327px">
+        <Box top={8} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} left="3px" maxW="full">
           <ProductAds 
             variant="new"
             onPress={ () => handleDetailAd('1') }
