@@ -19,9 +19,10 @@ type PropsAds = {
   variant?: 'new' | 'used';
   myAd?: boolean;
   isActive?: 'active' | 'inactive';
+  preview?: boolean;
 }
 
-export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, isActive = 'inactive' }: PropsAds) {
+export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, isActive, preview = true }: PropsAds) {
 
   const dimension = dimensionWith()
   const navigation = useNavigation<AppNavigatorRoutesProps>();
@@ -36,16 +37,37 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, i
 
   return (
     <VStack>
-      <HeaderAds
-        iconLeft={true}
-        nameIconLeft='arrow-back'
-        // title='Meus anúncios'
-        iconRight={true}
-        nameIconRight='border-color'
-        handleGoBack={handleGoBack}
-        myAd={true}
-      />
-      <ScrollView w="full"showsVerticalScrollIndicator={false} mb={24}>
+      {
+        preview === true ?
+        <Box 
+          flexDir="column" 
+          justifyContent="center" 
+          alignItems="center" 
+          textAlign="center"
+          bg="blue.200"
+          pt={10}
+          pb={4}
+        >
+          <Text fontFamily="bold" fontSize="md" color="gray.700">
+            Pré visualização do anúncio
+          </Text>
+          <Text fontFamily="regular" fontSize="sm" color="gray.700">
+            É assim que seu produto vai aparecer!
+          </Text>
+        </Box>
+        :
+        <HeaderAds
+          iconLeft={true}
+          nameIconLeft='arrow-back'
+          // title='Meus anúncios'
+          iconRight={true}
+          nameIconRight='border-color'
+          handleGoBack={handleGoBack}
+          myAd={false}
+        />
+      }
+      
+      <ScrollView w="full"showsVerticalScrollIndicator={false} mb={ preview === true ? 200 : 24}>
         <CaroulselAds
         isActive={isActive} 
         />
@@ -154,6 +176,9 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, i
           </VStack>
         </VStack>
         {
+          preview === true ?
+          ''
+          :
           isActive ?
           <VStack py={5} h="145px" px={dimension > 400 ? 10 : 5} justifyContent="space-between">
             <Button
@@ -190,6 +215,42 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, i
           </HStack>
         }
       </ScrollView>
+      {
+        preview === true ?
+        <HStack 
+          h="90px" 
+          bg="gray.700" 
+          // flex={1} 
+          // mt={8} 
+          w="100%"
+          bottom={106}
+          flexDirection="row" 
+          justifyContent="space-between" 
+          alignContent="center"
+          alignItems="center"
+          px={dimension > 400 ? 10 : 5}
+          position="absolute"
+          >
+            <Box w="47%" mr={2}>
+              <Button
+                title="Voltar"
+                variant="gray"
+                icon={true}
+                nameIcon='arrow-back'
+              />
+            </Box>
+            <Box w="47%">
+              <Button
+                title="Publicar"
+                variant="blue"
+                icon={true}
+                nameIcon='local-offer'
+              />
+            </Box>
+          </HStack>
+        :
+        ''
+      }
     </VStack>
   );
 }

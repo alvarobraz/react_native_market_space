@@ -7,7 +7,7 @@ type Props = {
   isActive?: 'active' | 'inactive'
 }
 
-export function CaroulselAds({ isActive = 'inactive' }: Props) {
+export function CaroulselAds({ isActive }: Props) {
   const isCarousel = useRef(null)
 
   const [ activeIndex, setActiveIndex ] = useState(0)
@@ -23,6 +23,8 @@ export function CaroulselAds({ isActive = 'inactive' }: Props) {
       imgUrl: "https://nestjstraining.s3.amazonaws.com/carousel_img.png",
     },
   ];
+
+  // console.log(isActive)
 
   return (
     <View>
@@ -59,10 +61,11 @@ export function CaroulselAds({ isActive = 'inactive' }: Props) {
         vertical={false}
         onSnapToItem={(index) => setActiveIndex(index)}
       />
-      {data.map((item, index) => (
+      {data.map((_, index) => (
           <>
             <HStack key={index}>
               <View
+                key={index}
                 h="3px" 
                 w="30%"
                 borderRadius="3px" 

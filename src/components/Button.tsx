@@ -6,7 +6,7 @@ type Props = IButtonProps & {
   title: string;
   variant?: 'black' | 'blue' | 'gray';
   icon?: boolean;
-  nameIcon?: 'add' | 'whatshot' | 'power-settings-new' | 'delete-outline'
+  nameIcon?: 'add' | 'whatshot' | 'power-settings-new' | 'delete-outline' | 'arrow-back' | 'local-offer'
 }
 
 export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
@@ -37,7 +37,7 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           <Icon 
             as={MaterialIcons}
             name={nameIcon}
-            color={nameIcon === 'delete-outline' ? "black" : "white"}
+            color={nameIcon === 'delete-outline' || nameIcon === 'arrow-back' ? "black" : nameIcon === 'local-offer' ? "white" : "white"}
             size={4}
             top={0.4}
             // left={3}
