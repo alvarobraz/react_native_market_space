@@ -43,7 +43,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
               name={nameIconLeft}
               color="gray.100"
               size={5}
-              left={-9}
+              left={-17}
             />
           </ButtonNativeBase>
           :
@@ -88,7 +88,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
               name={nameIconRight}
               color="gray.100"
               size={4}
-              left={-9}
+              left={-17}
             />
           </ButtonNativeBase>
           :

@@ -58,6 +58,10 @@ export function Catalog() {
     });
   }
 
+  function handleCreateAndEdit() {
+    navigation.navigate('createandedit');
+  }
+
   
   return (
     <>
@@ -152,6 +156,7 @@ export function Catalog() {
       <VStack flex={1} px={dimension > 400 ? 10 : 5} mt={6} mb={12} bg="gray.600" alignItems="center">
         <HeaderCatalog
           nameUser="Álvaro"
+          handleCreateAndEdit={handleCreateAndEdit}
         />
         <Text  w="full" fontFamily="regular" fontSize="xm" color="gray.300" mb={2}>
         Seus produtos anunciados para venda 

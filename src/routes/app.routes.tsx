@@ -9,6 +9,7 @@ import Tag from '../assets/tag.svg'
 import Logout from '../assets/logout.svg'
 import { SignOut } from '@screens/SignOut';
 import { TouchableOpacity } from 'react-native';
+import { CreateAndEdit } from '@screens/CreateAndEdit';
 
 
 type AppRoutes = {
@@ -17,6 +18,7 @@ type AppRoutes = {
   detailAd: {
     id: string
   }
+  createandedit: undefined;
   signout: undefined
 }
 
@@ -70,6 +72,20 @@ export function AppRoutes() {
       <Screen 
         name='detailAd'
         component={DetailAd}
+        options={{
+          tabBarStyle: {
+            display: 'none',
+          },
+          tabBarItemStyle: {
+            display: 'none',
+          },
+        }}
+        // options={{ tabBarButton: () => null }}
+      />
+      
+      <Screen 
+        name='createandedit'
+        component={CreateAndEdit}
         options={{
           tabBarStyle: {
             display: 'none',

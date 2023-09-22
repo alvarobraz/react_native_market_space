@@ -5,9 +5,10 @@ import { UserPhoto } from "./UserPhoto";
 type PropsHeader = {
   imgAvatar?: string;
   nameUser: string
+  handleCreateAndEdit?: () => void;
 }
 
-export default function HeaderCatalog({ imgAvatar, nameUser }: PropsHeader) {
+export default function HeaderCatalog({ imgAvatar, nameUser, handleCreateAndEdit }: PropsHeader) {
   return(
     <HStack justifyContent="space-between" mt={10} mb={2}>
       <Box w="50%">
@@ -41,6 +42,7 @@ export default function HeaderCatalog({ imgAvatar, nameUser }: PropsHeader) {
         variant="black"
         icon={true}
         nameIcon="add"
+        onPress={handleCreateAndEdit}
       />
       </Box>
     </HStack>
