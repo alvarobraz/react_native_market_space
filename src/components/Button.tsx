@@ -1,6 +1,7 @@
-import { Button as ButtonNativeBase, IButtonProps, Icon, Text, HStack } from 'native-base';
+import { Button as ButtonNativeBase, IButtonProps, Icon, Text, HStack, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { dimensionWith } from '@utils/dimensionWith';
+import { Loading } from '@components/Loading';
 
 type Props = IButtonProps & {
   title: string;
@@ -9,8 +10,10 @@ type Props = IButtonProps & {
   nameIcon?: 'add' | 'whatshot' | 'power-settings-new' | 'delete-outline' | 'arrow-back' | 'local-offer'
 }
 
-export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
+export function Button({ title, variant, icon, nameIcon, isLoading, ...rest }: Props) {
   const dimension = dimensionWith()
+  console.log('isLoading')
+  console.log(isLoading)
   return (
     <ButtonNativeBase
       flexDirection="row"
@@ -45,23 +48,26 @@ export function Button({ title, variant, icon, nameIcon, ...rest }: Props) {
           :
           ''
         }
+        {isLoading === true && variant === 'black' ? <Spinner w="full" /> : 
         <Text 
-          // bg="gray.500"
-          flexDirection="row"
-          alignItems="center"
-          textAlign={icon === true ? "center" : "center"}
-          justifyContent={icon === true ? "center" : "center"}
-          w={icon === true ? "auto" : "full"}
-          color={variant === 'blue' ? 'white' : variant === 'black' ? 'white' : 'gray.100'}
-          fontFamily="bold"
-          fontSize={icon === true ? "xs" : "xm"}
-          // position="relative"
-          // right={-6}
-          ml={icon === true ? "2" : "0"}
-          // left={-3}
-        >
-          {title}
-        </Text>
+        // bg="gray.500"
+        flexDirection="row"
+        alignItems="center"
+        textAlign={icon === true ? "center" : "center"}
+        justifyContent={icon === true ? "center" : "center"}
+        w={icon === true ? "auto" : "full"}
+        color={variant === 'blue' ? 'white' : variant === 'black' ? 'white' : 'gray.100'}
+        fontFamily="bold"
+        fontSize={icon === true ? "xs" : "xm"}
+        // position="relative"
+        // right={-6}
+        ml={icon === true ? "2" : "0"}
+        // left={-3}
+      >
+        {title}
+      </Text>
+        }
+        
       </HStack>
     </ButtonNativeBase>
   );
