@@ -1,3 +1,4 @@
+
 import { useTheme } from 'native-base';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
@@ -10,6 +11,7 @@ import Logout from '../assets/logout.svg'
 import { SignOut } from '@screens/SignOut';
 import { TouchableOpacity } from 'react-native';
 import { CreateAndEdit } from '@screens/CreateAndEdit';
+import { useAuth } from '@hooks/useAuth';
 
 
 type AppRoutes = {
@@ -31,6 +33,8 @@ export function AppRoutes() {
   const { colors, sizes } = useTheme();
 
   const iconSize = sizes[5];
+
+  const {  signOut } = useAuth();
   
 
   return (
@@ -118,7 +122,7 @@ export function AppRoutes() {
           return {
             tabPress: (e) => {
               e.preventDefault()
-              console.log('signout')
+              signOut()
               // navigation.navigate('signIn')
             },
           }

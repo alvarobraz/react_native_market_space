@@ -1,6 +1,7 @@
+import { useAuth } from '@hooks/useAuth';
 import {  Button as ButtonNativeBase, IButtonProps, Image, IImageProps, VStack, Center, Icon, Spinner } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Loading } from '@components/Loading';
+// import { Loading } from '@components/Loading';
 import AvataDefault from '../assets/avatar_default.png'
 
 type Props = IImageProps & IButtonProps & {
@@ -11,7 +12,7 @@ type Props = IImageProps & IButtonProps & {
 }
 
 export function UserPhoto({ size, icon, imgAvatar, value, isLoading, ...rest }: Props) {
-  // console.log(imgAvatar) 
+  const { user } = useAuth(); 
   return (
     <VStack top={icon === true ? null : "-17"} alignItems={icon === true ? "flex-end" : "flex-start"}>
       {
@@ -23,7 +24,7 @@ export function UserPhoto({ size, icon, imgAvatar, value, isLoading, ...rest }: 
           <Image
           size="88px"
           borderRadius={999}
-          source={imgAvatar ? { uri: imgAvatar } : AvataDefault}
+          source={!user.avatar ? { uri: `../../tmp/uploads/${user.avatar}` } : AvataDefault}
           defaultSource={AvataDefault}
           alt="Avatar do perfil sem imagem"
           resizeMode="contain"

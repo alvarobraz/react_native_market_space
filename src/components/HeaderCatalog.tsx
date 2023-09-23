@@ -1,14 +1,14 @@
+import { useAuth } from '@hooks/useAuth';
 import { Box, HStack, VStack, Text } from "native-base";
 import { Button } from "./Button";
 import { UserPhoto } from "./UserPhoto";
 
 type PropsHeader = {
-  imgAvatar?: string;
-  nameUser: string
   handleCreateAndEdit?: () => void;
 }
 
-export default function HeaderCatalog({ imgAvatar, nameUser, handleCreateAndEdit }: PropsHeader) {
+export default function HeaderCatalog({ handleCreateAndEdit }: PropsHeader) {
+  const { user } = useAuth();
   return(
     <HStack justifyContent="space-between" mt={10} mb={2}>
       <Box w="50%">
@@ -19,7 +19,6 @@ export default function HeaderCatalog({ imgAvatar, nameUser, handleCreateAndEdit
         <UserPhoto 
           size={8}
           mb={2}
-          imgAvatar={imgAvatar}
         />
         </VStack>
         <VStack w="70%" top={1} left={2}>
@@ -31,7 +30,7 @@ export default function HeaderCatalog({ imgAvatar, nameUser, handleCreateAndEdit
           <Text
            fontSize="xs"
           >
-            {nameUser}
+            {user.name}
           </Text>
         </VStack>
         </HStack>

@@ -29,7 +29,7 @@ export function DetailAd({  imgAvatar, nameUser, variant = 'new', myAd = true, i
   const route = useRoute()
   const { id } = route.params as RouteParams
 
-  console.log(id)
+  // console.log(id)
 
   function handleGoBack() {
     navigation.goBack();

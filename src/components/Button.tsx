@@ -12,8 +12,8 @@ type Props = IButtonProps & {
 
 export function Button({ title, variant, icon, nameIcon, isLoading, ...rest }: Props) {
   const dimension = dimensionWith()
-  console.log('isLoading')
-  console.log(isLoading)
+  // console.log('isLoading')
+  // console.log(isLoading)
   return (
     <ButtonNativeBase
       flexDirection="row"
@@ -48,7 +48,7 @@ export function Button({ title, variant, icon, nameIcon, isLoading, ...rest }: P
           :
           ''
         }
-        {isLoading === true && variant === 'black' ? <Spinner w="full" /> : 
+        {isLoading === true && (variant === 'black' || variant === 'blue') ? <Spinner color="wwhite" w="full" /> : 
         <Text 
         // bg="gray.500"
         flexDirection="row"

@@ -36,7 +36,7 @@ export function Catalog() {
   }
 
   const showModal = () => {
-    console.log('modal')
+    // console.log('modal')
     setModalVisible(true);
   };
 
@@ -155,7 +155,6 @@ export function Catalog() {
       <ScrollView w="full"showsVerticalScrollIndicator={false}>
       <VStack flex={1} px={dimension > 400 ? 10 : 5} mt={6} mb={12} bg="gray.600" alignItems="center">
         <HeaderCatalog
-          nameUser="Álvaro"
           handleCreateAndEdit={handleCreateAndEdit}
         />
         <Text  w="full" fontFamily="regular" fontSize="xm" color="gray.300" mb={2}>
