@@ -1,3 +1,4 @@
+import { useAuth } from "@hooks/useAuth";
 import { Button as ButtonNativeBase, IButtonProps, Box, HStack, Icon, Text, VStack } from "native-base";
 import { Tag, ArrowRight } from "phosphor-react-native";
 
@@ -6,6 +7,10 @@ type PropsYourAds = IButtonProps &  {
 }
 
 export default function YourAds({ handleYourAds,...rest}: PropsYourAds) {
+
+  const { countMyProducts, isLoadingMyProducts } = useAuth();
+
+
   return(
       <HStack
         justifyContent="space-between" 
@@ -27,10 +32,10 @@ export default function YourAds({ handleYourAds,...rest}: PropsYourAds) {
         <Box w="45%">
           <VStack pl={1}>
             <Text top={1} fontFamily="bold" fontSize="md" color="gray.200">
-              4
+              {countMyProducts}
             </Text>
             <Text top={-1} fontFamily="regular" fontSize="xss" color="gray.200">
-              anúncios ativos
+              {countMyProducts > 0 ? `anúncios ativos` : `anúncio ativo`}
             </Text>
           </VStack>
         </Box>

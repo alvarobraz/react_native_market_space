@@ -21,13 +21,15 @@ export type PropsPaymentMethods = {
 export type PropsProduct = {
   id: string,
   name: string,
+  description?: string;
   price: number,
   is_new: boolean,
   accept_trade: boolean,
+  user_id?: string,
   is_active?: boolean;
   product_images: PropsProductImages[]
   payment_methods: PropsPaymentMethods[]
-  user: {
+  user?: {
     avatar: string
   }
 }
@@ -65,6 +67,9 @@ export type AppContextDataProps = {
   showModal: () => void;
   setModalVisible: React.Dispatch<SetStateAction<boolean>>;
   isModalVisible: boolean;
+  myProducts: PropsProduct[];
+  countMyProducts: number;
+  isLoadingMyProducts: boolean;
 }
 
 type AppContextProviderProps = {
@@ -96,6 +101,10 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
   
   const [products, setProducts] = useState<PropsProduct[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+
+  const [myProducts, setMyProducts] = useState<PropsProduct[]>([]);
+  const [countMyProducts, setCountMyProducts] = useState<number>(0);
+  const [isLoadingMyProducts, setIsLoadingMyProducts] = useState(false);
   
   async function userAndTokenUpdate(userData: UserDTO, token: string) {
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -126,6 +135,7 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
         await storageUserAndTokenSave(data.user, data.token);
         userAndTokenUpdate(data.user, data.token)
         fetchProducts()
+        fetchMyProducts()
       }
     } catch (error) {
       throw error
@@ -153,6 +163,7 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
       if(token && userLogged) {
         userAndTokenUpdate(userLogged, token);
         fetchProducts()
+        fetchMyProducts()
       } 
     } catch (error) {
       throw error
@@ -244,6 +255,31 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
     }
   }
 
+
+  // My Ads
+  async function fetchMyProducts() {
+    try {
+      setIsLoadingMyProducts(true)
+
+      const response = await api.get('/users/products');
+      setCountMyProducts(response.data.length)
+      setMyProducts(response.data);
+    } 
+    catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi possível carregar os seus anúncios';
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
+      })
+    }
+    finally {
+      setIsLoadingMyProducts(false)
+    }
+  }
+
   
   useEffect(() => {
     loadUserData()
@@ -284,6 +320,9 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
         showModal,
         setModalVisible,
         isModalVisible,
+        myProducts,
+        countMyProducts,
+        isLoadingMyProducts
       }
     }
     >

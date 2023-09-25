@@ -61,7 +61,7 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, name, p
                 top={-94}
                 left={1}
                 borderRadius={999}
-                source={product?.user.avatar ? { uri: `http://192.168.100.7:3333/images/${product?.user.avatar}` } : AvataDefault}
+                source={product?.user?.avatar! ? { uri: `http://192.168.100.7:3333/images/${product?.user.avatar}` } : AvataDefault}
                 defaultSource={AvataDefault}
                 alt="Avatar do perfil sem imagem"
                 resizeMode="contain"
