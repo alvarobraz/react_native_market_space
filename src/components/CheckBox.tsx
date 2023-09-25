@@ -1,6 +1,7 @@
 import { HStack, IButtonProps, Text } from 'native-base';
 import { TouchableOpacity, View, StyleSheet  } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useAuth } from '@hooks/useAuth';
 
 type Props = IButtonProps & {
   type: string[]
@@ -9,6 +10,11 @@ type Props = IButtonProps & {
 }
 
 export function CheckBox({ type, checkBoxItem, handleTypeCheckBox, ...rest  }:Props) {
+
+  const { 
+    pix,
+    setPix
+  } = useAuth();
 
   const isChecked = checkBoxItem.filter((item) => type.includes(item));
 

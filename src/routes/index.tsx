@@ -14,7 +14,7 @@ export function Routes() {
 
   const { user, isLoadingUserStorageData } = useAuth();
 
-  console.log("USUÁRIO LOGADO =>", user);
+  // console.log("USUÁRIO LOGADO =>", user);
 
   const { colors } = useTheme();
 

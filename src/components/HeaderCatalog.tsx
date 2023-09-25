@@ -12,7 +12,7 @@ export default function HeaderCatalog({ handleCreateAndEdit }: PropsHeader) {
   return(
     <HStack justifyContent="space-between" mt={10} mb={2}>
       <Box w="50%">
-        <HStack>
+        <HStack> 
         <VStack 
           w="30%"
         >

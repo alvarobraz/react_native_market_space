@@ -1,6 +1,10 @@
+import { useAuth } from '@hooks/useAuth';
 import { Button as ButtonNativeBase, IButtonProps, Text } from 'native-base';
 import { XCircle } from "phosphor-react-native";
 
+// const { 
+//   setIsNew,
+// } = useAuth();
 
 type Props = IButtonProps & {
   title: string;
@@ -19,7 +23,7 @@ export function ButtonTag({ title, variant, icon, ...rest  }:Props) {
         _pressed={{
           bg: variant === 'new' ? 'blue.100' : 'gray.400'
         }}
-        onPress={()=>{}}
+        // onPress={()=>{}}
         { ...rest }
       >
         <Text 

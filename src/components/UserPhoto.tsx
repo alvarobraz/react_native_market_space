@@ -14,20 +14,22 @@ type Props = IImageProps & IButtonProps & {
 export function UserPhoto({ size, icon, imgAvatar, value, isLoading, ...rest }: Props) {
   const { user } = useAuth(); 
   return (
-    <VStack top={icon === true ? null : "-17"} alignItems={icon === true ? "flex-end" : "flex-start"}>
+    <VStack top={icon === true ? null : "-17"} alignItems={icon === true ? "flex-end" : "flex-start"} >
       {
         isLoading === true ? 
-        <Center w="88px" h="88px" bg="gray.700" borderRadius={999} mb={10}>
+        <Center w="88px" h="88px" bg="gray.700" borderRadius={999} mb={10} >
           <Spinner color="blue.200" />
         </Center> :
         <>
           <Image
-          size="88px"
-          borderRadius={999}
-          source={!user.avatar ? { uri: `../../tmp/uploads/${user.avatar}` } : AvataDefault}
+          w="50px"
+          h="50px"
+          borderRadius={user.avatar ? "50px" : "0"}
+          top="18px"
+          source={user.avatar ? { uri: `http://192.168.100.7:3333/images/${user.avatar}` } : AvataDefault}
           defaultSource={AvataDefault}
           alt="Avatar do perfil sem imagem"
-          resizeMode="contain"
+          // resizeMode="contain"
           position="relative"
           onError={(error) => console.log('Erro ao carregar imagem:', error)}
         />

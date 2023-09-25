@@ -1,55 +1,55 @@
 import { useState } from "react";
+import { VStack, Text, HStack, ScrollView, Modal, Box, } from "native-base";
+import { useAuth } from '@hooks/useAuth';
 import { AppNavigatorRoutesProps } from '@routes/app.routes'
 import { ButtonTag } from "@components/ButtonTag";
 import HeaderCatalog from "@components/HeaderCatalog";
 import { InputButtonFilter } from "@components/InputButtonFilter";
 import { ProductAds } from "@components/ProductAds";
 import YourAds from "@components/YourAds";
-import { VStack, Text, HStack, ScrollView, Modal, Box, } from "native-base";
 import { Switch } from 'react-native';
 import { CheckBox } from "@components/CheckBox";
 import { Button } from "@components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { dimensionWith } from "@utils/dimensionWith";
-// import {Dimensions} from 'react-native';
+import { Loading } from '@components/Loading';
+
+export type PropsProductImages = {
+  id: string;
+  path: string;
+}
 
 export function Catalog() {
 
+  const { 
+    products, 
+    isLoadingProducts,
+    setNovo,
+    novo,
+    setUsado,
+    usado,
+    setAcceptTrade,
+    acceptTrade,
+    handleTypeCheckBox,
+    type,
+    handleResetFilters,
+    handleApllyFilters,
+    showModal,
+    setModalVisible,
+    isModalVisible
+  } = useAuth();
+
   const dimension = dimensionWith()
   const navigation = useNavigation<AppNavigatorRoutesProps>()
-
-  const [isModalVisible, setModalVisible] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
-  const [type, setType] = useState<string[]>([])
-  const checkBoxItem = ['Pix', 'Boleto', 'Dinheiro', 'Cartão de crédito', 'Cartão de débito' ];
-
+  const checkBoxItem = ['Pix', 'Boleto', 'Dinheiro', 'Cartão de Crédito', 'Depósito Bancário'];
+  
   const toggleSwitch = () => {
-    setIsEnabled(!isEnabled);
+    setAcceptTrade(!isEnabled)
   };
 
   function handleYourAds() {
     alert('Ir para seus anúncios')
-  }
-
-  function handleSearchAds() {
-    alert('Buscar anúncios')
-  }
-
-  const showModal = () => {
-    // console.log('modal')
-    setModalVisible(true);
-  };
-
-  const hideModal = () => {
-    setModalVisible(false);
-  };
-
-  function handleTypeCheckBox(title: string) {
-    if (type.includes(title)) {
-      setType(type.filter((item) => item !== title));
-    } else {
-      setType([...type, title]);
-    }
   }
 
   function handleDetailAd(id: string) {
@@ -61,12 +61,11 @@ export function Catalog() {
   function handleCreateAndEdit() {
     navigation.navigate('createandedit');
   }
-
   
   return (
     <>
-      <Modal  isOpen={isModalVisible} onClose={() => setModalVisible(false)}>
-        <Modal.Content 
+      <Modal isOpen={isModalVisible} onClose={() => setModalVisible(false)}>
+      <Modal.Content 
           flex={1} 
           flexDirection="column" 
           position="relative"
@@ -91,12 +90,14 @@ export function Catalog() {
                <ButtonTag
                 title="NOVO"
                 variant="new"
-                icon={true}
+                icon={novo === true ? true : false}
+                onPress={()=>setNovo((state)=> !state)}
                />
                <ButtonTag
                 title="USADO"
                 variant="used"
-                // icon={true}
+                onPress={()=>setUsado((state)=> !state)}
+                icon={usado === true ? true : false}
                />
                </HStack>
               </Box>
@@ -111,10 +112,10 @@ export function Catalog() {
                <HStack left={-10}>
                <Switch
                   trackColor={{false: '#D9D8DA', true: '#647AC7'}}
-                  thumbColor={isEnabled ? '#f4f3f4' : '#f4f3f4'}
+                  thumbColor={acceptTrade === true ? '#f4f3f4' : '#f4f3f4'}
                   ios_backgroundColor="#3e3e3e"
                   onValueChange={toggleSwitch}
-                  value={isEnabled}
+                  value={acceptTrade}
                />
                </HStack>
               </Box>
@@ -140,12 +141,14 @@ export function Catalog() {
                 <Button
                   title="Resetar filtros"
                   variant="gray"
+                  onPress={handleResetFilters}
                 />
               </Box>
               <Box w="47%">
                 <Button
                   title="Aplicar filtros"
                   variant="black"
+                  onPress={handleApllyFilters}
                 />
               </Box>
             </HStack>
@@ -167,24 +170,31 @@ export function Catalog() {
         Compre produtos variados
         </Text>
         <InputButtonFilter
-        typeInput="filter"
-        handleSearchAds={handleSearchAds}
-        handleApplyFilters={showModal}
+          typeInput="filter"
+          handleApplyFilters={showModal}
         />
-        <Box top={8} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} left="3px" maxW="full">
-          <ProductAds 
-            variant="new"
-            onPress={ () => handleDetailAd('1') }
-            hasAvatar={true}
-          />
-          <ProductAds hasAvatar={true} />
-          <ProductAds hasAvatar={true} />
-          <ProductAds variant="new" hasAvatar={true} />
-          <ProductAds hasAvatar={true} />
-          <ProductAds hasAvatar={true} />
-        </Box>
+        
+          {
+            isLoadingProducts ?
+            <Loading/>
+            :
+            <>
+            <Box bg="gray.600" top={8} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} w="100%">
+              {
+                products.map((product, index) => (
+                  <ProductAds
+                    key={index}
+                    onPress={ () => handleDetailAd(product.id) }
+                    hasAvatar={true}
+                    product={product}
+                  />
+                ))
+              }
+            </Box>
+            </>
+          }
       </VStack>
-    </ScrollView>
+      </ScrollView>
     </>
   );
   
