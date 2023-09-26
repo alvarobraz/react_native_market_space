@@ -11,11 +11,6 @@ type Props = IButtonProps & {
 
 export function CheckBox({ type, checkBoxItem, handleTypeCheckBox, ...rest  }:Props) {
 
-  const { 
-    pix,
-    setPix
-  } = useAuth();
-
   const isChecked = checkBoxItem.filter((item) => type.includes(item));
 
   return (

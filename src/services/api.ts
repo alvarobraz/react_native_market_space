@@ -5,10 +5,10 @@ const api = axios.create({
 });
 
 api.interceptors.response.use((response) => {
-  console.log("INTERCEPTOR =>", response)
+  // console.log("INTERCEPTOR =>", response)
   return response
 }, (error) => {
-  console.log('INTERCEPTOR RESPONSE ERROR =>', error)
+  // console.log('INTERCEPTOR RESPONSE ERROR =>', error)
   return Promise.reject(error);
 })
 

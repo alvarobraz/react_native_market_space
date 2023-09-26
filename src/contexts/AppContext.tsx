@@ -70,6 +70,8 @@ export type AppContextDataProps = {
   myProducts: PropsProduct[];
   countMyProducts: number;
   isLoadingMyProducts: boolean;
+  setSelectMyProducts: React.Dispatch<SetStateAction<string>>;
+  selectMyProducts: string;
 }
 
 type AppContextProviderProps = {
@@ -80,19 +82,42 @@ export const AppContext = createContext<AppContextDataProps>({} as AppContextDat
 
 export function AppContextProvider({ children }: AppContextProviderProps)  {
 
-  const [user, setUser] = useState<UserDTO>({} as UserDTO)
-  const [isLoadingUserStorageData, setIsLoadingUserStorageData] = useState(true);
-
   const [ pix, setPix ] = useState('pix')
   const [ card, setCard ] = useState('card')
   const [ boleto, setBoleto ] = useState('boleto')
   const [ cash, setCash ] = useState('cash')
   const [ deposit, setDeposit ] = useState('deposit')
+
+  function handleTypeCheckBox(title: string) {
+      console.log('title')
+      console.log(title)
+    if (type.includes(title)) {
+      title === 'Pix' ? setPix('') : ''
+      title === 'Boleto' ? setBoleto('') : ''
+      title === 'Dinheiro' ? setCash('') : ''
+      title === 'Cartão de Crédito' ? setCard('') : ''
+      title === 'Depósito Bancário' ? setDeposit('') : ''
+      setType(type.filter((item) => item !== title));
+    } else {
+      title === 'Pix' ? setPix('pix') : ''
+      title === 'Boleto' ? setBoleto('boleto') : ''
+      title === 'Dinheiro' ? setCash('cash') : ''
+      title === 'Cartão de Crédito' ? setCard('card') : ''
+      title === 'Depósito Bancário' ? setDeposit('deposit') : ''
+      setType([...type, title]);
+    }
+  }
+
+  const [user, setUser] = useState<UserDTO>({} as UserDTO)
+  const [isLoadingUserStorageData, setIsLoadingUserStorageData] = useState(true);
+
   const [ acceptTrade, setAcceptTrade ] = useState<boolean | undefined>(undefined)
   const [ novo, setNovo ] = useState<boolean>(true)
   const [ usado, setUsado ] = useState<boolean>(true)
   const [ isNew, setIsNew ] = useState<boolean | undefined>(undefined)
   const [ query, setQuery ] = useState('')
+
+  const [selectMyProducts, setSelectMyProducts] = useState("all");
 
   const [type, setType] = useState<string[]>(['Pix', 'Boleto', 'Dinheiro', 'Cartão de Crédito', 'Depósito Bancário'])
   const [isModalVisible, setModalVisible] = useState(false);
@@ -148,6 +173,7 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
       setUser({} as UserDTO);
       await storageUserRemove();
       await storageAuthTokenRemove();
+
     } catch (error) {
       throw error;
     } finally {
@@ -195,8 +221,7 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
       setIsLoadingProducts(true)
 
       let url = ''
-      url = `payment_methods=${pix}&payment_methods=${card}&payment_methods=${boleto}&payment_methods=${cash}&payment_methods=${deposit}&query=${query}`
-
+      
       if(acceptTrade !== undefined && isNew !== undefined) {
         url = `is_new=${isNew}&accept_trade=${acceptTrade}&payment_methods=${pix}&payment_methods=${card}&payment_methods=${boleto}&payment_methods=${cash}&payment_methods=${deposit}&query=${query}`        
       }
@@ -211,6 +236,9 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
       else
       if(novo === false && usado === true) {
         url = `is_new=false&payment_methods=${pix}&payment_methods=${card}&payment_methods=${boleto}&payment_methods=${cash}&payment_methods=${deposit}&query=${query}`        
+      }
+      else {
+        url = `payment_methods=${pix}&payment_methods=${card}&payment_methods=${boleto}&payment_methods=${cash}&payment_methods=${deposit}&query=${query}`
       }
 
       const response = await api.get(`/products/?${url}`);
@@ -235,35 +263,30 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
     fetchProducts()
   }
 
-  function handleTypeCheckBox(title: string) {
-      console.log('title')
-      console.log(title)
-    if (type.includes(title)) {
-      title === 'Pix' ? setPix('') : ''
-      title === 'Boleto' ? setBoleto('') : ''
-      title === 'Dinheiro' ? setCash('') : ''
-      title === 'Cartão de Crédito' ? setCard('') : ''
-      title === 'Depósito Bancário' ? setDeposit('') : ''
-      setType(type.filter((item) => item !== title));
-    } else {
-      title === 'Pix' ? setPix('pix') : ''
-      title === 'Boleto' ? setBoleto('boleto') : ''
-      title === 'Dinheiro' ? setCash('cash') : ''
-      title === 'Cartão de Crédito' ? setCard('card') : ''
-      title === 'Depósito Bancário' ? setDeposit('deposit') : ''
-      setType([...type, title]);
-    }
-  }
-
-
   // My Ads
   async function fetchMyProducts() {
     try {
-      setIsLoadingMyProducts(true)
 
+      setIsLoadingMyProducts(true)
       const response = await api.get('/users/products');
-      setCountMyProducts(response.data.length)
-      setMyProducts(response.data);
+
+      if(response.data.lenth !== 0) {
+        if(selectMyProducts === 'all') {
+          setCountMyProducts(response.data.length)
+          setMyProducts(response.data);
+        }
+        if(selectMyProducts === 'new') {
+          const newProducts = response.data.filter((product: { is_new: boolean; })  => product.is_new === true);
+          setCountMyProducts(newProducts.length)
+          setMyProducts(newProducts);
+        }
+        if(selectMyProducts === 'used') {
+          const usedProducts = response.data.filter((product: { is_new: boolean; })  => product.is_new === false);
+          setCountMyProducts(usedProducts.length)
+          setMyProducts(usedProducts);
+        }
+      }
+
     } 
     catch (error) {
       const isAppError = error instanceof AppError;
@@ -283,7 +306,12 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
   
   useEffect(() => {
     loadUserData()
-  },[])
+    fetchProducts()
+    if(selectMyProducts) {
+      fetchMyProducts()
+    }
+
+  },[selectMyProducts])
 
   return (
     <AppContext.Provider value={
@@ -322,7 +350,9 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
         isModalVisible,
         myProducts,
         countMyProducts,
-        isLoadingMyProducts
+        isLoadingMyProducts,
+        setSelectMyProducts,
+        selectMyProducts
       }
     }
     >

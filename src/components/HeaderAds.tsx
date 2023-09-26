@@ -10,9 +10,10 @@ type PropsHeader = IButtonProps & {
   nameIconRight?: 'add' | 'arrow-forward' | 'border-color';
   handleGoBack?: () => void;
   myAd?: boolean;
+  handleCreateAndEdit?: () => void;
 }
 
-export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, myAd = true, ...rest }: PropsHeader) {
+export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, myAd = true, handleCreateAndEdit, ...rest }: PropsHeader) {
   const dimension = dimensionWith()
   return(
     <HStack
@@ -82,6 +83,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
               bg: 'gray.500'
             }}
             right={0}
+            onPress={handleCreateAndEdit}
           >
             <Icon 
               as={MaterialIcons}

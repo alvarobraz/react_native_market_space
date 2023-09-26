@@ -33,13 +33,11 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, name, p
         bg: 'gray.500'
       }}
       {...rest}
-      // maxW="153px"
       w={dimension > 400 ? "153px" : "127px"}
       h="auto"
       style={ product?.is_active === false ? { opacity: 0.8 } : null}
-      justifyContent="space-between"
     >
-      <VStack flex={1} justifyContent="space-between" h="auto" w={dimension > 400 ? "153px" : "127px"}>
+      <VStack flex={1} justifyContent="flex-start" h="auto" w={dimension > 400 ? "153px" : "127px"}>
         <Image 
             w={dimension > 400 ? "153px" : "127px"}
             h="90px"
@@ -52,7 +50,11 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, name, p
             mb={2}
           />
           
-          <HStack justifyContent={hasAvatar ? "space-between" : "flex-end"} w={dimension > 400 ? "153px" : "127px"} >
+          <Box 
+            justifyContent={hasAvatar ? "space-between" : "flex-end"} 
+            w={dimension > 400 ? "153px" : "127px"}
+            flexDir="row"
+          >
             {
               hasAvatar ?
               <Image
@@ -76,7 +78,7 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, name, p
                 {product?.is_new === true ? 'NOVO' : 'USADO'}
               </Text>
             </Box>
-          </HStack>
+          </Box>
           {
             product?.is_active === false ?
             <VStack position="absolute" top="72px">
@@ -87,17 +89,17 @@ export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, name, p
             :
             ''
           }
-          <VStack style={ product?.is_active === false ? { opacity: 0.7 } : null} top={product?.is_active === false ? -6 : -6}>
-            <Text fontFamily="bold" fontSize="sm" color="gray.200" textAlign="left">
+          <VStack justifyContent="flex-start" style={ product?.is_active === false ? { opacity: 0.7 } : null} top={product?.is_active === false ? -6 : -6}>
+            <Text fontFamily="bold" fontSize="sm" color="gray.200" textAlign="left" h="auto">
              {product?.name}
             </Text>
             <HStack>
-            <Text top={1} fontFamily="bold" fontSize="xm" color="gray.100">
-              R$ 
-            </Text>
-            <Text fontFamily="bold" fontSize="md" color="gray.100" paddingLeft={1}>
-              {formatValueBRL(product?.price)}
-            </Text>
+              <Text top={1} fontFamily="bold" fontSize="xm" color="gray.100">
+                R$ 
+              </Text>
+              <Text fontFamily="bold" fontSize="md" color="gray.100" paddingLeft={1}>
+                {formatValueBRL(product?.price)}
+              </Text>
             </HStack>
           </VStack>
         
