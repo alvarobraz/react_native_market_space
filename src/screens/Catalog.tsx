@@ -42,7 +42,7 @@ export function Catalog() {
   const dimension = dimensionWith()
   const navigation = useNavigation<AppNavigatorRoutesProps>()
   const [isEnabled, setIsEnabled] = useState(false);
-  const checkBoxItem = ['Pix', 'Boleto', 'Dinheiro', 'Cartão de Crédito', 'Depósito Bancário'];
+  const checkBoxItem = ["pix", "boleto", "cash", "card", "deposit"];
   
   const toggleSwitch = () => {
     setAcceptTrade(!isEnabled)

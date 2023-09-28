@@ -68,6 +68,7 @@ export type AppContextDataProps = {
   setModalVisible: React.Dispatch<SetStateAction<boolean>>;
   isModalVisible: boolean;
   myProducts: PropsProduct[];
+  fetchMyProducts: () => Promise<void>
   countMyProducts: number;
   isLoadingMyProducts: boolean;
   setSelectMyProducts: React.Dispatch<SetStateAction<string>>;
@@ -89,21 +90,19 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
   const [ deposit, setDeposit ] = useState('deposit')
 
   function handleTypeCheckBox(title: string) {
-      console.log('title')
-      console.log(title)
     if (type.includes(title)) {
-      title === 'Pix' ? setPix('') : ''
-      title === 'Boleto' ? setBoleto('') : ''
-      title === 'Dinheiro' ? setCash('') : ''
-      title === 'Cartão de Crédito' ? setCard('') : ''
-      title === 'Depósito Bancário' ? setDeposit('') : ''
+      title === 'pix' ? setPix('') : null
+      title === 'boleto' ? setBoleto('') : null
+      title === 'cash' ? setCash('') : null
+      title === 'card' ? setCard('') : null
+      title === 'deposit' ? setDeposit('') : null
       setType(type.filter((item) => item !== title));
     } else {
-      title === 'Pix' ? setPix('pix') : ''
-      title === 'Boleto' ? setBoleto('boleto') : ''
-      title === 'Dinheiro' ? setCash('cash') : ''
-      title === 'Cartão de Crédito' ? setCard('card') : ''
-      title === 'Depósito Bancário' ? setDeposit('deposit') : ''
+      title === 'pix' ? setPix('pix') : null
+      title === 'boleto' ? setBoleto('boleto') : null
+      title === 'cash' ? setCash('cash') : null
+      title === 'card' ? setCard('card') : null
+      title === 'deposit' ? setDeposit('deposit') : null
       setType([...type, title]);
     }
   }
@@ -119,10 +118,10 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
 
   const [selectMyProducts, setSelectMyProducts] = useState("all");
 
-  const [type, setType] = useState<string[]>(['Pix', 'Boleto', 'Dinheiro', 'Cartão de Crédito', 'Depósito Bancário'])
+  const [type, setType] = useState<string[]>(["pix", "boleto", "cash", "card", "deposit"])
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const toast = useToast();
+  // const toast = useToast();
   
   const [products, setProducts] = useState<PropsProduct[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(false);
@@ -203,7 +202,7 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
     setUsado(true)
     setIsNew(undefined)
     setAcceptTrade(undefined)
-    setType(['Pix', 'Boleto', 'Dinheiro', 'Cartão de Crédito', 'Depósito Bancário'])
+    setType(["pix", "boleto", "cash", "card", "deposit"])
   }
 
   function handleApllyFilters() {
@@ -245,14 +244,14 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
       setProducts(response.data);
     } 
     catch (error) {
-      const isAppError = error instanceof AppError;
-      const title = isAppError ? error.message : 'Não foi possível carregar os produtos';
+      // const isAppError = error instanceof AppError;
+      // const title = isAppError ? error.message : 'Não foi possível carregar os produtos';
 
-      toast.show({
-        title,
-        placement: 'top',
-        bgColor: 'red.500'
-      })
+      // toast.show({
+      //   title,
+      //   placement: 'top',
+      //   bgColor: 'red.500'
+      // })
     }
     finally {
       setIsLoadingProducts(false)
@@ -289,14 +288,14 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
 
     } 
     catch (error) {
-      const isAppError = error instanceof AppError;
-      const title = isAppError ? error.message : 'Não foi possível carregar os seus anúncios';
+      // const isAppError = error instanceof AppError;
+      // const title = isAppError ? error.message : 'Não foi possível carregar os seus anúncios';
 
-      toast.show({
-        title,
-        placement: 'top',
-        bgColor: 'red.500'
-      })
+      // toast.show({
+      //   title,
+      //   placement: 'top',
+      //   bgColor: 'red.500'
+      // })
     }
     finally {
       setIsLoadingMyProducts(false)
@@ -306,7 +305,8 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
   
   useEffect(() => {
     loadUserData()
-    fetchProducts()
+    // fetchProducts()
+    // fetchMyProducts()
     if(selectMyProducts) {
       fetchMyProducts()
     }
@@ -349,6 +349,7 @@ export function AppContextProvider({ children }: AppContextProviderProps)  {
         setModalVisible,
         isModalVisible,
         myProducts,
+        fetchMyProducts,
         countMyProducts,
         isLoadingMyProducts,
         setSelectMyProducts,

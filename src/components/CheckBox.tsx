@@ -2,6 +2,7 @@ import { HStack, IButtonProps, Text } from 'native-base';
 import { TouchableOpacity, View, StyleSheet  } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useAuth } from '@hooks/useAuth';
+import { transformPaymentMethods } from '@utils/index';
 
 type Props = IButtonProps & {
   type: string[]
@@ -30,7 +31,7 @@ export function CheckBox({ type, checkBoxItem, handleTypeCheckBox, ...rest  }:Pr
           )}
         </View>
         </TouchableOpacity>
-        <Text ml={3} fontFamily="regular" fontSize="md" color="gray.200">{title}</Text>
+        <Text ml={3} fontFamily="regular" fontSize="md" color="gray.200">{transformPaymentMethods(title)}</Text>
       </HStack>
     ))}
   </>

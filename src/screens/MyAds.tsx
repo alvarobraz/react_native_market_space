@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import HeaderAds from '@components/HeaderAds';
 import { ScrollView, Box, CheckIcon, Select, Text, VStack } from 'native-base';
 import { ProductAds } from '@components/ProductAds';
@@ -7,10 +8,12 @@ import { AppNavigatorRoutesProps } from '@routes/app.routes';
 import { useAuth } from '@hooks/useAuth';
 import { Loading } from '@components/Loading';
 
+
 export function MyAds() {
 
   const { 
     myProducts,
+    fetchMyProducts,
     countMyProducts,
     isLoadingMyProducts,
     setSelectMyProducts,
@@ -30,6 +33,10 @@ export function MyAds() {
       id
     });
   }
+
+  useEffect(()=>{
+    fetchMyProducts()
+  },[])
 
   return (
     <ScrollView w="full"showsVerticalScrollIndicator={false}>

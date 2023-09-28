@@ -19,7 +19,7 @@ import { dimensionWith } from "@utils/dimensionWith";
 import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
 
-type FileInfo = {
+export type FileInfo = {
   exists: true;
   uri: string;
   size: number;
@@ -103,7 +103,7 @@ export function SignUp() {
         const fileExtension = photoSelected.assets[0].uri.split('.').pop();
 
         const photoFile = {
-          name: `alvaro${fileExtension}`.toLowerCase(),
+          name: `${photoInfo.md5}.${fileExtension}`.toLowerCase(),
           uri: photoSelected.assets[0].uri,
           type: `${photoSelected.assets[0].type}/${fileExtension}`
         } as Avatar;
@@ -179,7 +179,7 @@ export function SignUp() {
           <Controller 
             control={control}
             name="avatar"
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { value } }) => (
               <UserPhoto 
                 size={16}
                 mr={4}
