@@ -8,7 +8,6 @@ import { PropsProduct, PropsProductImages } from "@contexts/AppContext";
 type Props = IButtonProps & {
   imgAvatar?: string;
   hasAvatar?: boolean;
-  variant?: 'new' | 'used';
   adsInactive?: boolean;
   name?: string;
   price?: number;
@@ -16,7 +15,7 @@ type Props = IButtonProps & {
   product: PropsProduct
 }
 
-export function ProductAds({ imgAvatar, variant, hasAvatar, adsInactive, name, price, imgProduct, product, ...rest }: Props) {
+export function ProductAds({ imgAvatar, hasAvatar, adsInactive, name, price, imgProduct, product, ...rest }: Props) {
 
   const dimension = dimensionWith()
   const paths = product?.product_images?.map(product => product.path);

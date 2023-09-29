@@ -25,7 +25,9 @@ export function MyAds() {
   const navigation = useNavigation<AppNavigatorRoutesProps>()
   
   function handleCreateAndEdit() {
-    navigation.navigate('createandedit');
+    navigation.navigate('createandedit', {
+      id: undefined
+    });
   }
 
   function handleDetailAd(id: string) {
@@ -34,9 +36,9 @@ export function MyAds() {
     });
   }
 
-  useEffect(()=>{
-    fetchMyProducts()
-  },[])
+  // useEffect(()=>{
+  //   fetchMyProducts()
+  // },[])
 
   return (
     <ScrollView w="full"showsVerticalScrollIndicator={false}>
@@ -48,33 +50,40 @@ export function MyAds() {
         nameIconRight='add'
         handleCreateAndEdit={handleCreateAndEdit}
       />
-      <Box px={dimension > 400 ? 10 : 5} flexDir="row" justifyContent="space-between" alignContent="center" alignItems="center">
-        <Text fontFamily="regular" fontSize="sm" color="gray.200">
-          {countMyProducts > 0 ? `${countMyProducts} anúncíos`: `${countMyProducts} anúncío`}
-        </Text>
-        <Select w="111px" h="34px" selectedValue={selectMyProducts} accessibilityLabel="Todos" placeholder="Todos" _selectedItem={{
-          bg: "gray.600",
-          endIcon: <CheckIcon style={{ transform: [{scale: 0.5}] }} />
-        }} mt={1} onValueChange={itemValue => setSelectMyProducts(itemValue)}>
-            <Select.Item label="Todos" value="all" />
-            <Select.Item label="Novo" value="new" />
-            <Select.Item label="usado" value="used" />
-          </Select>
-      </Box>
-      <Box px={dimension > 400 ? 10 : 5} top={6} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} maxW="full">
-        {
-          isLoadingMyProducts ?
-          <Loading/>
-          :
-          myProducts.map((product, index) => (
-            <ProductAds
-              key={index}
-              onPress={ () => handleDetailAd(product.id) }
-              product={product}
-            />
-          ))
-        }
-      </Box>
+      {
+        isLoadingMyProducts ?
+        <Loading/>
+        :
+        <>
+        <Box px={dimension > 400 ? 10 : 5} flexDir="row" justifyContent="space-between" alignContent="center" alignItems="center">
+          <Text fontFamily="regular" fontSize="sm" color="gray.200">
+            {countMyProducts > 0 ? `${countMyProducts} anúncíos`: `${countMyProducts} anúncío`}
+          </Text>
+          <Select w="111px" h="34px" selectedValue={selectMyProducts} accessibilityLabel="Todos" placeholder="Todos" _selectedItem={{
+            bg: "gray.600",
+            endIcon: <CheckIcon style={{ transform: [{scale: 0.5}] }} />
+          }} mt={1} onValueChange={itemValue => setSelectMyProducts(itemValue)}>
+              <Select.Item label="Todos" value="all" />
+              <Select.Item label="Novo" value="new" />
+              <Select.Item label="usado" value="used" />
+            </Select>
+        </Box>
+        <Box px={dimension > 400 ? 10 : 5} top={6} flexDir="row" flexWrap="wrap" justifyContent="space-between" pb={10} maxW="full">
+          {
+            isLoadingMyProducts ?
+            <Loading/>
+            :
+            myProducts.map((product, index) => (
+              <ProductAds
+                key={index}
+                onPress={ () => handleDetailAd(product?.id!) }
+                product={product}
+              />
+            ))
+          }
+        </Box>
+        </>
+      }
     </VStack>
     </ScrollView>
   );

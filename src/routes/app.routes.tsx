@@ -20,7 +20,9 @@ type AppRoutes = {
   detailAd: {
     id: string
   }
-  createandedit: undefined;
+  createandedit: {
+    id?: string
+  }
   signout: undefined
 }
 

@@ -14,12 +14,18 @@ export type PropsProductImages = {
 }
 
 export type PropsPaymentMethods = {
-  key: string;
+  key?: string;
   name: string;
 }
 
+export type PropsUser = {
+  avatar: string;
+  name?: string;
+  tel?: string;
+} 
+
 export type PropsProduct = {
-  id: string,
+  id?: string,
   name: string,
   description?: string;
   price: number,
@@ -29,9 +35,7 @@ export type PropsProduct = {
   is_active?: boolean;
   product_images: PropsProductImages[]
   payment_methods: PropsPaymentMethods[]
-  user?: {
-    avatar: string
-  }
+  user?: PropsUser
 }
 
 export type AppContextDataProps = {

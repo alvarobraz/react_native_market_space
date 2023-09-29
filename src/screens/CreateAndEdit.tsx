@@ -9,7 +9,7 @@ import { CheckBox } from "@components/CheckBox";
 import HeaderAds from "@components/HeaderAds";
 import { Input } from "@components/Input";
 import { UploadButton } from "@components/UploadButton";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 import { dimensionWith } from "@utils/dimensionWith";
 import { Controller, useForm } from "react-hook-form";
@@ -17,6 +17,10 @@ import { useAuth } from "@hooks/useAuth";
 import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+type RouteParams = {
+  id: string;
+}
 
 type FileInfo = {
   exists: true;
@@ -46,6 +50,10 @@ type FormDataProps = {
 }
 
 export function CreateAndEdit() {
+
+
+  const route = useRoute()
+  const { id } = route.params as RouteParams
 
   const toast = useToast();
   const { type, handleTypeCheckBox } = useAuth();
@@ -217,6 +225,8 @@ export function CreateAndEdit() {
       setIsSubmitting(false)
     }
   }
+
+  console.log('id -> '+id)
 
   return (
     <VStack mb={20}>

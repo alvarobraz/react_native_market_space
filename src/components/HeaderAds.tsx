@@ -13,8 +13,9 @@ type PropsHeader = IButtonProps & {
   handleCreateAndEdit?: () => void;
 }
 
-export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, myAd = true, handleCreateAndEdit, ...rest }: PropsHeader) {
+export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, myAd, handleCreateAndEdit, ...rest }: PropsHeader) {
   const dimension = dimensionWith()
+  console.log('myAd -> '+myAd)
   return(
     <HStack
       justifyContent={title ? "center" : "space-between"} 
@@ -90,7 +91,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
               name={nameIconRight}
               color="gray.100"
               size={4}
-              left={-17}
+              left={0}
             />
           </ButtonNativeBase>
           :

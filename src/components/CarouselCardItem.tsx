@@ -1,11 +1,13 @@
 import { View, Image } from 'native-base'
 import { Dimensions } from "react-native"
+import { LogBox } from 'react-native';
 
 export const SLIDER_WIDTH = Dimensions.get('window').width
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH)
 
 type PropsData = {
-  imgUrl: string;
+  id?: string;
+  path: string;
 }
 
 type Props = {
@@ -13,17 +15,20 @@ type Props = {
   index: number;
 }
 
-export function CarouselCardItem({ item, index }: Props) {
+export function CarouselCardItem({ item }: Props) {
+
+  LogBox.ignoreLogs(['Warning: Each child in a list should have a unique "key" prop.']);
+
   return (
     <View 
       bg="white"
       w={ITEM_WIDTH}
-      key={index}
+      key={item.id}
     >
       <Image
         w={ITEM_WIDTH}
         h="280px"
-        source={{ uri: item.imgUrl }}
+        source={{ uri: `http://192.168.100.7:3333/images/${item.path}` }}
         alt='produtos'
       />
     </View>

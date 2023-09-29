@@ -2,34 +2,25 @@ import { useRef, useState } from 'react'
 import Carousel from 'react-native-snap-carousel'
 import { CarouselCardItem, SLIDER_WIDTH, ITEM_WIDTH } from '../components/CarouselCardItem'
 import { View, HStack, Box, Text } from 'native-base'
+import { PropsCarousel } from '@screens/DetailAd'
+import { LogBox } from 'react-native'
 
 type Props = {
-  isActive?: 'active' | 'inactive'
+  isActive?: boolean
+  data: PropsCarousel[]
 }
 
-export function CaroulselAds({ isActive }: Props) {
+export function CaroulselAds({ isActive, data }: Props) {
+
+  LogBox.ignoreLogs(['Warning: Each child in a list should have a unique "key" prop.']);
+
   const isCarousel = useRef(null)
-
   const [ activeIndex, setActiveIndex ] = useState(0)
-
-  const data = [
-    {
-      imgUrl: "https://nestjstraining.s3.amazonaws.com/carousel_img.png",
-    },
-    {
-      imgUrl: "https://nestjstraining.s3.amazonaws.com/carousel_img_2.png",
-    },
-    {
-      imgUrl: "https://nestjstraining.s3.amazonaws.com/carousel_img.png",
-    },
-  ];
-
-  // console.log(isActive)
 
   return (
     <View>
       {
-        isActive === 'inactive' ?
+        !isActive ?
         <Box 
           bg="gray.300"
           w={ITEM_WIDTH}
@@ -53,7 +44,7 @@ export function CaroulselAds({ isActive }: Props) {
         ref={isCarousel}
         data={data}
         renderItem={CarouselCardItem}
-        key={1}
+        // key={1}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         inactiveSlideShift={0}
