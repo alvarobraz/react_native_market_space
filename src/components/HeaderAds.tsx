@@ -13,9 +13,18 @@ type PropsHeader = IButtonProps & {
   handleCreateAndEdit?: () => void;
 }
 
-export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, nameIconRight, handleGoBack, myAd, handleCreateAndEdit, ...rest }: PropsHeader) {
+export default function HeaderAds({ 
+  iconLeft,
+  nameIconLeft,
+  title,
+  iconRight,
+  nameIconRight,
+  handleGoBack,
+  myAd,
+  handleCreateAndEdit,
+  ...rest 
+}: PropsHeader) {
   const dimension = dimensionWith()
-  console.log('myAd -> '+myAd)
   return(
     <HStack
       justifyContent={title ? "center" : "space-between"} 
@@ -32,20 +41,25 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
           iconLeft === true ?
           <ButtonNativeBase
             {...rest}
-            w="5%"
+            w={8}
+            h={8}
             bg="gray.600"
             _pressed={{
               bg: 'gray.500'
             }}
-            left={0}
+            flexDirection="row"
+            justifyContent="center"
+            alignContent="center"
+            alignItems="center"
             onPress={handleGoBack}
+            left={-7}
           >
             <Icon 
               as={MaterialIcons}
               name={nameIconLeft}
               color="gray.100"
               size={5}
-              left={-17}
+              left={0}
             />
           </ButtonNativeBase>
           :
@@ -65,7 +79,7 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
             fontSize={iconLeft === true ? "sm" : "sm"}
             mx={0}
             ml={iconLeft === false ? '5%' : 0}
-            mr={iconRight === false ? '5%' : 0}
+            mr={iconRight === false ? '5%' : '-5%'}
             top={-2}
             // left={iconRight === false ? '-24px' : '0'}
           >
@@ -78,12 +92,13 @@ export default function HeaderAds({ iconLeft, nameIconLeft, title, iconRight, na
           iconRight === true ?
           <ButtonNativeBase
             {...rest}
-            w="5%"
+            w={8}
+            h={8}
             bg="gray.600"
             _pressed={{
               bg: 'gray.500'
             }}
-            right={0}
+            right={-7}
             onPress={handleCreateAndEdit}
           >
             <Icon 

@@ -14,14 +14,23 @@ export default function HeaderCatalog({ handleCreateAndEdit }: PropsHeader) {
       <Box w="50%">
         <HStack> 
         <VStack 
+          // bg="gray.200"
           w="30%"
+          justifyContent="center"
+          alignContent="center"
+          alignItems="center"
+          h="50px"
         >
         <UserPhoto 
           size={8}
           mb={2}
         />
         </VStack>
-        <VStack w="70%" top={1} left={2}>
+        <VStack 
+          w="70%" 
+          // top={1} 
+          left={2}
+        >
           <Text
             fontSize="xs"
           >

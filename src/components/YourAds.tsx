@@ -1,6 +1,9 @@
-import { useAuth } from "@hooks/useAuth";
-import { Button as ButtonNativeBase, IButtonProps, Box, HStack, Icon, Text, VStack } from "native-base";
+import { useState, useEffect, useCallback } from "react";
+import { Button as ButtonNativeBase, IButtonProps, Box, HStack, Icon, Text, VStack, Spinner } from "native-base";
 import { Tag, ArrowRight } from "phosphor-react-native";
+import { api } from "@services/api";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 type PropsYourAds = IButtonProps &  {
   handleYourAds: () => void;
@@ -8,8 +11,43 @@ type PropsYourAds = IButtonProps &  {
 
 export default function YourAds({ handleYourAds,...rest}: PropsYourAds) {
 
-  const { countMyProducts, isLoadingMyProducts } = useAuth();
+  const [isLoadingMyProducts, setIsLoadingMyProducts] = useState(false);
+  const [countMyProducts, setCountMyProducts] = useState<number>(0);
 
+  // My Ads
+  async function fetchMyProducts() {
+    try {
+
+      setIsLoadingMyProducts(true)
+      const response = await api.get('/users/products');
+
+      setCountMyProducts(response.data.length)
+
+    } 
+    catch (error) {
+      // const isAppError = error instanceof AppError;
+      // const title = isAppError ? error.message : 'Não foi possível carregar os seus anúncios';
+
+      // toast.show({
+      //   title,
+      //   placement: 'top',
+      //   bgColor: 'red.500'
+      // })
+    }
+    finally {
+      setIsLoadingMyProducts(false)
+    }
+  }
+
+  // useEffect(() => {
+  //   fetchMyProducts()
+  // },[])
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMyProducts()
+    },[])
+  )
 
   return(
       <HStack
@@ -32,7 +70,7 @@ export default function YourAds({ handleYourAds,...rest}: PropsYourAds) {
         <Box w="45%">
           <VStack pl={1}>
             <Text top={1} fontFamily="bold" fontSize="md" color="gray.200">
-              {countMyProducts}
+              {isLoadingMyProducts ? <Spinner/> : countMyProducts}
             </Text>
             <Text top={-1} fontFamily="regular" fontSize="xss" color="gray.200">
               {countMyProducts > 0 ? `anúncios ativos` : `anúncio ativo`}

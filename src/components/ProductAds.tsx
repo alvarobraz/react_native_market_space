@@ -89,7 +89,7 @@ export function ProductAds({ imgAvatar, hasAvatar, adsInactive, name, price, img
             ''
           }
           <VStack justifyContent="flex-start" style={ product?.is_active === false ? { opacity: 0.7 } : null} top={product?.is_active === false ? -6 : -6}>
-            <Text fontFamily="bold" fontSize="sm" color="gray.200" textAlign="left" h="auto">
+            <Text fontFamily="bold" fontSize="sm" color="gray.200" textAlign="left" h="auto" numberOfLines={1}>
              {product?.name}
             </Text>
             <HStack>

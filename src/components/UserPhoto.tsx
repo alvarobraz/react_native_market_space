@@ -3,6 +3,7 @@ import {  Button as ButtonNativeBase, IButtonProps, Image, IImageProps, VStack, 
 import { MaterialIcons } from '@expo/vector-icons';
 // import { Loading } from '@components/Loading';
 import AvataDefault from '../assets/avatar_default.png'
+import { dimensionWith } from '@utils/dimensionWith';
 
 type Props = IImageProps & IButtonProps & {
   size: number;
@@ -13,8 +14,15 @@ type Props = IImageProps & IButtonProps & {
 
 export function UserPhoto({ size, icon, imgAvatar, value, isLoading, ...rest }: Props) {
   const { user } = useAuth(); 
+  const dimension = dimensionWith()
+  // {dimension > 400 ? "50px" : "40px"}
   return (
-    <VStack top={icon === true ? null : "-17"} alignItems={icon === true ? "flex-end" : "flex-start"} >
+    <VStack 
+      // top={icon === true ? null : dimension > 400 ? "-17" : "-7"} 
+      alignItems={icon === true ? "flex-end" : "flex-start"}
+      // w={dimension > 400 ? "50px" : "40px"}
+      // h={dimension > 400 ? "50px" : "40px"}
+    >
       {
         isLoading === true ? 
         <Center w="88px" h="88px" bg="gray.700" borderRadius={999} mb={10} >
@@ -22,10 +30,10 @@ export function UserPhoto({ size, icon, imgAvatar, value, isLoading, ...rest }: 
         </Center> :
         <>
           <Image
-          w="50px"
-          h="50px"
+          w={dimension > 400 ? "50px" : "40px"}
+          h={dimension > 400 ? "50px" : "40px"}
           borderRadius={user.avatar ? "50px" : "0"}
-          top="18px"
+          // top="18px"
           source={user.avatar ? { uri: `http://192.168.100.7:3333/images/${user.avatar}` } : AvataDefault}
           defaultSource={AvataDefault}
           alt="Avatar do perfil sem imagem"

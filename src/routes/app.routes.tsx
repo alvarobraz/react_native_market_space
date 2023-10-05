@@ -22,6 +22,7 @@ type AppRoutes = {
   }
   createandedit: {
     id?: string
+    preview?: string
   }
   signout: undefined
 }

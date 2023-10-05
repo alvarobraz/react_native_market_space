@@ -1,14 +1,14 @@
 import { Box, Image, VStack, Text, HStack, ScrollView, useToast } from 'native-base';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import { Linking } from 'react-native';
 import HeaderAds from '@components/HeaderAds';
 import { CaroulselAds } from '@components/CarouselAds';
-import BackgroundImgProduct from '../assets/img_product_a.png'
 import AvataDefault from '../assets/avatar_default.png'
-import { Barcode, QrCode, Money, CreditCard, Bank } from "phosphor-react-native";
+// import { Barcode, QrCode, Money, CreditCard, Bank } from "phosphor-react-native";
 import { Button } from '@components/Button';
 import { AppNavigatorRoutesProps } from '@routes/app.routes';
 import { dimensionWith } from '@utils/dimensionWith';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { api } from '@services/api';
 import { PropsPaymentMethods, PropsProduct } from '@contexts/AppContext';
 import { useAuth } from '@hooks/useAuth';
@@ -21,19 +21,22 @@ type RouteParams = {
   id: string;
 }
 
-type PropsAds = {
-  preview?: boolean;
-}
+// type PropsAds = {
+//   preview?: boolean;
+// }
 
 export type PropsCarousel = {
-  id: string;
-  path: string;
+  id?: string;
+  path?: string;
+  name?: string | undefined;
+  uri?: string | undefined;
+  type?: string | undefined;
 }
 
-export function DetailAd({ preview }: PropsAds) {
+export function DetailAd() {
 
   const toast = useToast();
-  const { user, fetchMyProducts } = useAuth()
+  const { user } = useAuth()
   const dimension = dimensionWith()
   const navigation = useNavigation<AppNavigatorRoutesProps>();
   const route = useRoute()
@@ -46,16 +49,22 @@ export function DetailAd({ preview }: PropsAds) {
 
   
 
-  async function fetchMyProductId(id: string) {
+  async function fetchProductId(id: string) {
     try {
 
       setIsLoadingDetailAds(true)
       const response = await api.get(`/products/${id}`);
-      console.log(response.data)
+      // console.log('response.data -> fetchProductId')
+      // console.log(response.data.user_id)
+      // console.log('user.id')
+      // console.log(user.id)
       setDetailAd(response.data);
 
       if(response.data.user_id === user.id) {
         setMyAds(true)
+      }
+      else {
+        setMyAds(false)
       }
       setPaymentMethods(response.data.payment_methods)
       setCarousel(response.data.product_images)
@@ -93,8 +102,8 @@ export function DetailAd({ preview }: PropsAds) {
       setIsLoadingDetailAds(true);
       const is_active = isActive;
       await api.patch(`/products/${id}`, {is_active: is_active});
-      fetchMyProductId(id)
-      fetchMyProducts()
+      fetchProductId(id)
+      // fetchMyProducts()
       const statusTile = isActive ? 'ativado' : 'desativado'
       toast.show({
         title: `Produto ${statusTile} com sucesso`,
@@ -125,8 +134,8 @@ export function DetailAd({ preview }: PropsAds) {
 
       setIsLoadingDetailAds(true);
       await api.delete(`/products/${id}`);
-      fetchMyProductId(id)
-      fetchMyProducts()
+      fetchProductId(id)
+      // fetchMyProducts()
       toast.show({
         title: 'Produto deletado com sucesso',
         placement: 'top',
@@ -150,12 +159,28 @@ export function DetailAd({ preview }: PropsAds) {
     }
   }
 
-  useEffect(() => {
-    fetchMyProductId(id)
-  },[id])
+  async function handleGetInTouch(tel: number){
+    try {
+      
+      setIsLoadingDetailAds(true);
+      const urlWhatsApp = `https://wa.me/${tel}`;
+      await Linking.openURL(urlWhatsApp)
 
-  console.log('detailAd')
-  console.log(detailAd)
+    } catch (error) {
+      console.log('error')
+      console.error('Erro ao abrir o WhatsApp:', error);
+    } finally {
+      setIsLoadingDetailAds(false)
+    }
+  }
+
+
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchProductId(id)
+    },[id])
+  )
 
   return (
     <VStack flex={isLoadingDetailAds ? 1 : 0}>
@@ -164,36 +189,16 @@ export function DetailAd({ preview }: PropsAds) {
         <Loading/>
         :
         <>
-          {
-            preview === true ?
-            <Box 
-              flexDir="column" 
-              justifyContent="center" 
-              alignItems="center" 
-              textAlign="center"
-              bg="blue.200"
-              pt={10}
-              pb={4}
-            >
-              <Text fontFamily="bold" fontSize="md" color="gray.700">
-                Pré visualização do anúncio
-              </Text>
-              <Text fontFamily="regular" fontSize="sm" color="gray.700">
-                É assim que seu produto vai aparecer!
-              </Text>
-            </Box>
-            :
-            <HeaderAds
-              iconLeft={true}
-              nameIconLeft='arrow-back'
-              iconRight={true}
-              nameIconRight='border-color'
-              handleGoBack={handleGoBack}
-              myAd={myAds}
-              handleCreateAndEdit={()=>handleCreateAndEdit(detailAd?.id!)}
-            />
-          }
-          <ScrollView w="full"showsVerticalScrollIndicator={false} mb={ preview === true ? 200 : 24}>
+          <HeaderAds
+            iconLeft={true}
+            nameIconLeft='arrow-back'
+            iconRight={myAds ?? true}
+            nameIconRight='border-color'
+            handleGoBack={handleGoBack}
+            myAd={myAds}
+            handleCreateAndEdit={()=>handleCreateAndEdit(detailAd?.id!)}
+          />
+          <ScrollView w="full"showsVerticalScrollIndicator={false} mb={24}>
           <CaroulselAds
           isActive={detailAd?.is_active}
           data={carousel}
@@ -221,15 +226,15 @@ export function DetailAd({ preview }: PropsAds) {
             </Box>
             <HStack mt={1} mb={2} justifyContent="space-between">
               <Box>
-                <Text fontFamily="bold" fontSize="lg" color="gray.100">
+                <Text fontFamily="bold" fontSize="lg" color="gray.100" numberOfLines={1}>
                 {detailAd?.name}
                 </Text>
               </Box>
               <Box flexDirection="row">
-                <Text fontFamily="bold" fontSize="sm" color="blue.200" top="6px" mr="3px">
+                <Text fontFamily="bold" fontSize="sm" color="blue.200" top="6px" mr="3px" >
                   R$
                 </Text>
-                <Text fontFamily="bold" fontSize="lg" color="blue.200">
+                <Text fontFamily="bold" fontSize="lg" color="blue.200" numberOfLines={1}>
                   {formatValueBRL(detailAd?.price!)}
                 </Text>
               </Box>
@@ -264,9 +269,6 @@ export function DetailAd({ preview }: PropsAds) {
             </VStack>
           </VStack>
             {
-              preview === true ?
-              ''
-              :
               myAds ?
               <VStack py={5} h="145px" px={dimension > 400 ? 10 : 5} justifyContent="space-between">
                 <Button
@@ -300,12 +302,13 @@ export function DetailAd({ preview }: PropsAds) {
                     nameIcon='whatshot'
                     title='Entrar em contato'
                     variant="blue"
+                    onPress={()=>handleGetInTouch(detailAd?.user?.tel!)}
                   />
                 </Box>
               </HStack>
             }
           </ScrollView>
-          {
+          {/* {
             preview === true ?
             <HStack 
               h="90px" 
@@ -339,7 +342,7 @@ export function DetailAd({ preview }: PropsAds) {
               </HStack>
             :
             ''
-          }
+          } */}
         </>
       }
     </VStack>
